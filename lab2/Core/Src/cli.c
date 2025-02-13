@@ -20,13 +20,12 @@ char *CLEAR_ENTIRE_SCREEN = "\x1b[2J\x1b[1;1H";
 char *PROMPT = "> ";
 char *HELP = "Available Commands\r\n"
 		"===================\r\n"
-		"activate <flag> - remotely set a system flag\r\n"
-		"maintenance [ON, OFF] - disable or enable user buttons\r\n"
+		"timingTests - run the timing test suite and print results\r\n"
+		"printRCC - print the clock tree information from RCC\r\n"
 		"clear - clears the screen\r\n"
 		"help - display this message\r\n";
 char *UNKNOWN_CMD = "Unknown command. "
 		"Use 'help' for list of valid commands.\r\n";
-char *CLEAR_CMD_WINDOW = "\x1b[9;1H\x1b[0J";
 
 char data[MAX_DATA+1]; // Allow for \0 to be added
 uint16_t dataLen = 0;
@@ -47,7 +46,50 @@ int tokenizeString(char* string, char** tokens){
 void processCommand(char** tokens, int numTokens){
 	char txBuffer[TX_BUFFER_SIZE] = "";
 	strcat(txBuffer, "\r\n");
-	strcat(txBuffer, "EXAMPLE RESPONSE\r\n");
+
+	char* currentToken = tokens[0];
+
+	if(strcmp(currentToken, "") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+	}
+	else if(strcmp(currentToken, "timingTests") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+			strcat(txBuffer, "COMMAND_NOT_IMPLEMENTED\r\n");
+		}
+	}
+	else if(strcmp(currentToken, "printRCC") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+			strcat(txBuffer, "COMMAND_NOT_IMPLEMENTED\r\n");
+		}
+	}
+	else if(strcmp(currentToken, "clear") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+			strcat(txBuffer, CLEAR_ENTIRE_SCREEN);
+		}
+	}
+	else if(strcmp(currentToken, "help") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+			strcat(txBuffer, HELP);
+		}
+	}
+	else{
+		strcat(txBuffer, UNKNOWN_CMD);
+	}
+
 	strcat(txBuffer, PROMPT);
 	serialPrint(txBuffer, strlen(txBuffer));
 }
