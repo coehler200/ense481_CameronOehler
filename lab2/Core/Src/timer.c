@@ -10,6 +10,10 @@
 
 const int32_t TIMER_MAX = 65535;
 
+void timer_init(){
+	HAL_TIM_Base_Start_IT(&htim2);
+}
+
 int32_t timer_start(){
 	return __HAL_TIM_GET_COUNTER(&htim2);
 }

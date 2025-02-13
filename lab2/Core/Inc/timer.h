@@ -15,9 +15,14 @@
 extern TIM_HandleTypeDef htim2; // Increments once approximately every 1ms
 
 /*
+ * Configures and starts htim2
+ */
+void timer_init(void);
+
+/*
  * Returns the current value of the htim1 timer
  */
-int32_t timer_start();
+int32_t timer_start(void);
 
 /*
  * Returns the difference between the start time and time this function is

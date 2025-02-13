@@ -11,6 +11,7 @@
 #include <string.h>
 #include "serial.h"
 #include <stdio.h>
+#include "timertests.h"
 
 #define MAX_DATA 64
 #define MAX_TOKENS 16
@@ -20,7 +21,7 @@ char *CLEAR_ENTIRE_SCREEN = "\x1b[2J\x1b[1;1H";
 char *PROMPT = "> ";
 char *HELP = "Available Commands\r\n"
 		"===================\r\n"
-		"timingTests - run the timing test suite and print results\r\n"
+		"timerTests - run the timer test suite and print results\r\n"
 		"printRCC - print the clock tree information from RCC\r\n"
 		"clear - clears the screen\r\n"
 		"help - display this message\r\n";
@@ -54,12 +55,15 @@ void processCommand(char** tokens, int numTokens){
 			strcat(txBuffer, UNKNOWN_CMD);
 		}
 	}
-	else if(strcmp(currentToken, "timingTests") == 0){
+	else if(strcmp(currentToken, "timerTests") == 0){
 		if(numTokens > 1){
 			strcat(txBuffer, UNKNOWN_CMD);
 		}
 		else{
-			strcat(txBuffer, "COMMAND_NOT_IMPLEMENTED\r\n");
+			struct TimerTestResults results = runTimerTests();
+			char buf[TX_BUFFER_SIZE] = "";
+			timerTestResultsToString(buf, results);
+			strcat(txBuffer, buf);
 		}
 	}
 	else if(strcmp(currentToken, "printRCC") == 0){

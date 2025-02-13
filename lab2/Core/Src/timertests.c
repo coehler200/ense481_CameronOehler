@@ -215,6 +215,8 @@ uint32_t test_copy1024ByteStruct(){
 struct TimerTestResults runTimerTests(){
 	struct TimerTestResults results;
 
+	timer_init();
+
 	results.addTwoRandom32BitIntegersResult = test_addTwoRandom32BitIntegers();
 	results.addTwoRandom64BitIntegersResult = test_addTwoRandom64BitIntegers();
 	results.multiplyTwoRandom32BitIntegersResult =
