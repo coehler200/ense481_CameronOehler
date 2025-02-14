@@ -22,13 +22,13 @@ void timer_init(void);
 /*
  * Returns the current value of the htim1 timer
  */
-int32_t timer_start(void);
+uint16_t timer_start(void);
 
 /*
  * Returns the difference between the start time and time this function is
  * called. Takes into account 1 roll over.
  */
-int32_t timer_stop(int32_t start);
+uint16_t timer_stop(uint16_t start);
 
 /*
  * Release timer and reset it to its default state

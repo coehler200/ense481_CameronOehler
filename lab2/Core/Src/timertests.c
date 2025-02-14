@@ -2,6 +2,7 @@
  * timertests.c
  *
  *  Created on: Oct 23, 2024
+ *  Updated on: Feb 13, 2025
  *      Author: coehl
  */
 
@@ -31,11 +32,11 @@ uint32_t test_addTwoRandom32BitIntegers(){
 		int32_t a = rand();
 		int32_t b = rand();
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		int32_t c = a + b;
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -52,11 +53,11 @@ uint32_t test_addTwoRandom64BitIntegers(){
 		int64_t a = rand();
 		int64_t b = rand();
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		int64_t c = a + b;
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -73,11 +74,11 @@ uint32_t test_multiplyTwoRandom32BitIntegers(){
 		int32_t a = rand();
 		int32_t b = rand();
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		int32_t c = a * b;
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -94,11 +95,11 @@ uint32_t test_multiplyTwoRandom64BitIntegers(){
 		int64_t a = rand();
 		int64_t b = rand();
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		int64_t c = a * b;
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -115,7 +116,7 @@ uint32_t test_divideTwoRandom32BitIntegers(){
 		int32_t a = rand();
 		int32_t b = rand();
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		int32_t c;
 		if(b == 0){
@@ -124,7 +125,7 @@ uint32_t test_divideTwoRandom32BitIntegers(){
 			c = a / b;
 		}
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -141,7 +142,7 @@ uint32_t test_divideTwoRandom64BitIntegers(){
 		int64_t a = rand();
 		int64_t b = rand();
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		int64_t c;
 		if(b == 0){
@@ -150,7 +151,7 @@ uint32_t test_divideTwoRandom64BitIntegers(){
 			c = a / b;
 		}
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -164,11 +165,11 @@ uint32_t test_copy8ByteStruct(){
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct8Bytes a = {""};
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		struct TestStruct8Bytes b = a;
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)b; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -182,11 +183,11 @@ uint32_t test_copy128ByteStruct(){
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct128Bytes a = {""};
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		struct TestStruct128Bytes b = a;
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)b; // Silence unused variable warnings
 		averageTime += diff;
 	}
@@ -200,11 +201,11 @@ uint32_t test_copy1024ByteStruct(){
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct1024Bytes a = {""};
 
-		int16_t start = timer_start();
+		uint16_t start = timer_start();
 
 		struct TestStruct1024Bytes b = a;
 
-		int16_t diff = timer_stop(start);
+		uint16_t diff = timer_stop(start);
 		(void)b; // Silence unused variable warnings
 		averageTime += diff;
 	}

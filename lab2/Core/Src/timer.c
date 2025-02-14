@@ -9,7 +9,7 @@
 
 #include "timer.h"
 
-const int32_t TIMER_MAX = 65535;
+const uint16_t TIMER_MAX = 65535;
 
 void timer_init(){
 	TIM_ClockConfigTypeDef sClockSourceConfig = {0};
@@ -32,12 +32,12 @@ void timer_init(){
 	HAL_TIM_Base_Start(&htim2);
 }
 
-int32_t timer_start(){
+uint16_t timer_start(){
 	return __HAL_TIM_GET_COUNTER(&htim2);
 }
 
-int32_t timer_stop(int32_t start){
-	int32_t stop = __HAL_TIM_GET_COUNTER(&htim2);
+uint16_t timer_stop(uint16_t start){
+	uint16_t stop = __HAL_TIM_GET_COUNTER(&htim2);
 	if(start > stop){
 		start -= TIMER_MAX;
 	}
