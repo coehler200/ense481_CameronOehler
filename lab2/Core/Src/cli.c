@@ -12,6 +12,7 @@
 #include "serial.h"
 #include <stdio.h>
 #include "timertests.h"
+#include "rccinfo.h"
 
 #define MAX_DATA 64
 #define MAX_TOKENS 16
@@ -71,7 +72,9 @@ void processCommand(char** tokens, int numTokens){
 			strcat(txBuffer, UNKNOWN_CMD);
 		}
 		else{
-			strcat(txBuffer, "COMMAND_NOT_IMPLEMENTED\r\n");
+			char buf[TX_BUFFER_SIZE] = "";
+			getRCCInfoString(buf);
+			strcat(txBuffer, buf);
 		}
 	}
 	else if(strcmp(currentToken, "clear") == 0){
