@@ -30,4 +30,9 @@ int32_t timer_start(void);
  */
 int32_t timer_stop(int32_t start);
 
+/*
+ * Release timer and reset it to its default state
+ */
+void timer_shutdown(void);
+
 #endif /* INC_TIMER_H_ */

@@ -231,6 +231,8 @@ struct TimerTestResults runTimerTests(){
 	results.copy128ByteStructResult = test_copy128ByteStruct();
 	results.copy1024ByteStructResult = test_copy1024ByteStruct();
 
+	timer_shutdown();
+
 	return results;
 }
 
