@@ -9,7 +9,7 @@
 #include "timertests.h"
 #include "stdio.h"
 
-const int MAX_TRIALS = 100;
+const int MAX_TRIALS = 1;
 
 struct TestStruct8Bytes{
 	char bytes[8];
@@ -33,11 +33,13 @@ struct AverageAndWCET test_addTwoRandom32BitIntegers(){
 		int32_t a = rand();
 		int32_t b = rand();
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		int32_t c = a + b;
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)c; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -61,11 +63,13 @@ struct AverageAndWCET test_addTwoRandom64BitIntegers(){
 		int64_t a = rand();
 		int64_t b = rand();
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		int64_t c = a + b;
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)c; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -89,11 +93,13 @@ struct AverageAndWCET test_multiplyTwoRandom32BitIntegers(){
 		int32_t a = rand();
 		int32_t b = rand();
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		int32_t c = a * b;
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)c; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -117,11 +123,13 @@ struct AverageAndWCET test_multiplyTwoRandom64BitIntegers(){
 		int64_t a = rand();
 		int64_t b = rand();
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		int64_t c = a * b;
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)c; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -145,6 +153,7 @@ struct AverageAndWCET test_divideTwoRandom32BitIntegers(){
 		int32_t a = rand();
 		int32_t b = rand();
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		int32_t c;
@@ -155,6 +164,7 @@ struct AverageAndWCET test_divideTwoRandom32BitIntegers(){
 		}
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)c; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -178,6 +188,7 @@ struct AverageAndWCET test_divideTwoRandom64BitIntegers(){
 		int64_t a = rand();
 		int64_t b = rand();
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		int64_t c;
@@ -188,6 +199,7 @@ struct AverageAndWCET test_divideTwoRandom64BitIntegers(){
 		}
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)c; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -208,11 +220,13 @@ struct AverageAndWCET test_copy8ByteStruct(){
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct8Bytes a = {""};
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		struct TestStruct8Bytes b = a;
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)b; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -233,11 +247,13 @@ struct AverageAndWCET test_copy128ByteStruct(){
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct128Bytes a = {""};
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		struct TestStruct128Bytes b = a;
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)b; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
@@ -258,11 +274,13 @@ struct AverageAndWCET test_copy1024ByteStruct(){
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct1024Bytes a = {""};
 
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
 		struct TestStruct1024Bytes b = a;
 
 		uint16_t diff = timer_stop(start);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 		(void)b; // Silence unused variable warnings
 		if(diff > wcet){
 			wcet = diff;
