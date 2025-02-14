@@ -9,7 +9,7 @@
 #include "timertests.h"
 #include "stdio.h"
 
-const int MAX_TRIALS = 1;
+const int MAX_TRIALS = 100;
 
 struct TestStruct8Bytes{
 	char bytes[8];
@@ -30,13 +30,13 @@ struct AverageAndWCET test_addTwoRandom32BitIntegers(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		int32_t a = rand();
-		int32_t b = rand();
+		volatile int32_t a = rand();
+		volatile int32_t b = rand();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		int32_t c = a + b;
+		volatile int32_t c = a + b;
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -60,13 +60,13 @@ struct AverageAndWCET test_addTwoRandom64BitIntegers(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		int64_t a = rand();
-		int64_t b = rand();
+		volatile int64_t a = rand();
+		volatile int64_t b = rand();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		int64_t c = a + b;
+		volatile int64_t c = a + b;
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -90,13 +90,13 @@ struct AverageAndWCET test_multiplyTwoRandom32BitIntegers(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		int32_t a = rand();
-		int32_t b = rand();
+		volatile int32_t a = rand();
+		volatile int32_t b = rand();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		int32_t c = a * b;
+		volatile int32_t c = a * b;
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -120,13 +120,13 @@ struct AverageAndWCET test_multiplyTwoRandom64BitIntegers(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		int64_t a = rand();
-		int64_t b = rand();
+		volatile int64_t a = rand();
+		volatile int64_t b = rand();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		int64_t c = a * b;
+		volatile int64_t c = a * b;
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -150,13 +150,13 @@ struct AverageAndWCET test_divideTwoRandom32BitIntegers(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		int32_t a = rand();
-		int32_t b = rand();
+		volatile int32_t a = rand();
+		volatile int32_t b = rand();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		int32_t c;
+		volatile int32_t c;
 		if(b == 0){
 			c = 0;
 		}else{
@@ -185,13 +185,13 @@ struct AverageAndWCET test_divideTwoRandom64BitIntegers(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		int64_t a = rand();
-		int64_t b = rand();
+		volatile int64_t a = rand();
+		volatile int64_t b = rand();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		int64_t c;
+		volatile int64_t c;
 		if(b == 0){
 			c = 0;
 		}else{
@@ -218,12 +218,12 @@ struct AverageAndWCET test_copy8ByteStruct(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		struct TestStruct8Bytes a = {""};
+		volatile struct TestStruct8Bytes a = {""};
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		struct TestStruct8Bytes b = a;
+		volatile struct TestStruct8Bytes b = a;
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -245,12 +245,12 @@ struct AverageAndWCET test_copy128ByteStruct(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		struct TestStruct128Bytes a = {""};
+		volatile struct TestStruct128Bytes a = {""};
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		struct TestStruct128Bytes b = a;
+		volatile struct TestStruct128Bytes b = a;
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -272,12 +272,12 @@ struct AverageAndWCET test_copy1024ByteStruct(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
-		struct TestStruct1024Bytes a = {""};
+		volatile struct TestStruct1024Bytes a = {""};
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		struct TestStruct1024Bytes b = a;
+		volatile struct TestStruct1024Bytes b = a;
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
