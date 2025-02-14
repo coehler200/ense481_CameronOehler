@@ -2,7 +2,7 @@
 Cameron Oehler \
 200384643
 
-Running -Ofast APB2=64MHz
+Running -Ofast APB1=64MHz
 | Test | Avg Ticks | WCET Ticks | Scopy (1 run) us | Scopy (1 run) ticks |
 | -------- | ------- | ------ | ------ | ------ |
 | addTwoRandom32BitIntegers | 28 | 28 | 1.271 | ~81 |
