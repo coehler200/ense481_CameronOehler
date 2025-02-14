@@ -23,10 +23,11 @@ struct TestStruct1024Bytes{
 	char bytes[1024];
 };
 
-uint32_t test_addTwoRandom32BitIntegers(){
+struct AverageAndWCET test_addTwoRandom32BitIntegers(){
 	srand(timer_start());
 
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		int32_t a = rand();
@@ -38,16 +39,23 @@ uint32_t test_addTwoRandom32BitIntegers(){
 
 		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_addTwoRandom64BitIntegers(){
+struct AverageAndWCET test_addTwoRandom64BitIntegers(){
 	srand(timer_start());
 
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		int64_t a = rand();
@@ -59,16 +67,23 @@ uint32_t test_addTwoRandom64BitIntegers(){
 
 		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_multiplyTwoRandom32BitIntegers(){
+struct AverageAndWCET test_multiplyTwoRandom32BitIntegers(){
 	srand(timer_start());
 
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		int32_t a = rand();
@@ -80,16 +95,23 @@ uint32_t test_multiplyTwoRandom32BitIntegers(){
 
 		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_multiplyTwoRandom64BitIntegers(){
+struct AverageAndWCET test_multiplyTwoRandom64BitIntegers(){
 	srand(timer_start());
 
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		int64_t a = rand();
@@ -101,16 +123,23 @@ uint32_t test_multiplyTwoRandom64BitIntegers(){
 
 		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_divideTwoRandom32BitIntegers(){
+struct AverageAndWCET test_divideTwoRandom32BitIntegers(){
 	srand(timer_start());
 
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		int32_t a = rand();
@@ -127,16 +156,23 @@ uint32_t test_divideTwoRandom32BitIntegers(){
 
 		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_divideTwoRandom64BitIntegers(){
+struct AverageAndWCET test_divideTwoRandom64BitIntegers(){
 	srand(timer_start());
 
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		int64_t a = rand();
@@ -153,14 +189,21 @@ uint32_t test_divideTwoRandom64BitIntegers(){
 
 		uint16_t diff = timer_stop(start);
 		(void)c; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_copy8ByteStruct(){
+struct AverageAndWCET test_copy8ByteStruct(){
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct8Bytes a = {""};
@@ -171,14 +214,21 @@ uint32_t test_copy8ByteStruct(){
 
 		uint16_t diff = timer_stop(start);
 		(void)b; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_copy128ByteStruct(){
+struct AverageAndWCET test_copy128ByteStruct(){
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct128Bytes a = {""};
@@ -189,14 +239,21 @@ uint32_t test_copy128ByteStruct(){
 
 		uint16_t diff = timer_stop(start);
 		(void)b; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
-uint32_t test_copy1024ByteStruct(){
+struct AverageAndWCET test_copy1024ByteStruct(){
 	uint32_t averageTime = 0;
+	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIALS; i++){
 		struct TestStruct1024Bytes a = {""};
@@ -207,10 +264,16 @@ uint32_t test_copy1024ByteStruct(){
 
 		uint16_t diff = timer_stop(start);
 		(void)b; // Silence unused variable warnings
+		if(diff > wcet){
+			wcet = diff;
+		}
 		averageTime += diff;
 	}
 
-	return averageTime / MAX_TRIALS;
+	struct AverageAndWCET results;
+	results.average = averageTime / MAX_TRIALS;
+	results.wcet = wcet;
+	return results;
 }
 
 struct TimerTestResults runTimerTests(){
@@ -241,23 +304,32 @@ void timerTestResultsToString(char *buf, struct TimerTestResults results){
 	sprintf(buf,
 		"Timer Test Results\n\r"
 		"==========================\n\r"
-		"Add 2 32bit Integers = %lu\n\r"
-		"Add 2 64bit Integers = %lu\n\r"
-		"Multiply 2 32bit Integers = %lu\n\r"
-		"Multiply 2 64bit Integers = %lu\n\r"
-		"Divide 2 32bit Integers = %lu\n\r"
-		"Divide 2 64bit Integers = %lu\n\r"
-		"Copy 8byte struct = %lu\n\r"
-		"Copy 128byte struct = %lu\n\r"
-		"Copy 1024byte struct = %lu\n\r",
-		results.addTwoRandom32BitIntegersResult,
-		results.addTwoRandom64BitIntegersResult,
-		results.multiplyTwoRandom32BitIntegersResult,
-		results.multiplyTwoRandom64BitIntegersResult,
-		results.divideTwoRandom32BitIntegersResult,
-		results.divideTwoRandom64BitIntegersResult,
-		results.copy8ByteStructResult,
-		results.copy128ByteStructResult,
-		results.copy1024ByteStructResult
+		"Add 2 32bit Integers = %lu [wcet=%lu]\n\r"
+		"Add 2 64bit Integers = %lu [wcet=%lu]\n\r"
+		"Multiply 2 32bit Integers = %lu [wcet=%lu]\n\r"
+		"Multiply 2 64bit Integers = %lu [wcet=%lu]\n\r"
+		"Divide 2 32bit Integers = %lu [wcet=%lu]\n\r"
+		"Divide 2 64bit Integers = %lu [wcet=%lu]\n\r"
+		"Copy 8byte struct = %lu [wcet=%lu]\n\r"
+		"Copy 128byte struct = %lu [wcet=%lu]\n\r"
+		"Copy 1024byte struct = %lu [wcet=%lu]\n\r",
+		results.addTwoRandom32BitIntegersResult.average,
+		results.addTwoRandom32BitIntegersResult.wcet,
+		results.addTwoRandom64BitIntegersResult.average,
+		results.addTwoRandom64BitIntegersResult.wcet,
+		results.multiplyTwoRandom32BitIntegersResult.average,
+		results.multiplyTwoRandom32BitIntegersResult.wcet,
+		results.multiplyTwoRandom64BitIntegersResult.average,
+		results.multiplyTwoRandom64BitIntegersResult.wcet,
+		results.divideTwoRandom32BitIntegersResult.average,
+		results.divideTwoRandom32BitIntegersResult.wcet,
+		results.divideTwoRandom64BitIntegersResult.average,
+		results.divideTwoRandom64BitIntegersResult.wcet,
+		results.copy8ByteStructResult.average,
+		results.copy8ByteStructResult.wcet,
+		results.copy128ByteStructResult.average,
+		results.copy128ByteStructResult.wcet,
+		results.copy1024ByteStructResult.average,
+		results.copy1024ByteStructResult.wcet
 	);
 }

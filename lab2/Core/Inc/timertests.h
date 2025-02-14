@@ -13,27 +13,32 @@
 #include "timer.h"
 #include <stdlib.h>
 
-struct TimerTestResults{
-	uint32_t addTwoRandom32BitIntegersResult;
-	uint32_t addTwoRandom64BitIntegersResult;
-	uint32_t multiplyTwoRandom32BitIntegersResult;
-	uint32_t multiplyTwoRandom64BitIntegersResult;
-	uint32_t divideTwoRandom32BitIntegersResult;
-	uint32_t divideTwoRandom64BitIntegersResult;
-	uint32_t copy8ByteStructResult;
-	uint32_t copy128ByteStructResult;
-	uint32_t copy1024ByteStructResult;
+struct AverageAndWCET{
+	uint32_t average;
+	uint32_t wcet;
 };
 
-uint32_t test_addTwoRandom32BitIntegers();
-uint32_t test_addTwoRandom64BitIntegers();
-uint32_t test_multiplyTwoRandom32BitIntegers();
-uint32_t test_multiplyTwoRandom64BitIntegers();
-uint32_t test_divideTwoRandom32BitIntegers();
-uint32_t test_divideTwoRandom64BitIntegers();
-uint32_t test_copy8ByteStruct();
-uint32_t test_copy128ByteStruct();
-uint32_t test_copy1024ByteStruct();
+struct TimerTestResults{
+	struct AverageAndWCET addTwoRandom32BitIntegersResult;
+	struct AverageAndWCET addTwoRandom64BitIntegersResult;
+	struct AverageAndWCET multiplyTwoRandom32BitIntegersResult;
+	struct AverageAndWCET multiplyTwoRandom64BitIntegersResult;
+	struct AverageAndWCET divideTwoRandom32BitIntegersResult;
+	struct AverageAndWCET divideTwoRandom64BitIntegersResult;
+	struct AverageAndWCET copy8ByteStructResult;
+	struct AverageAndWCET copy128ByteStructResult;
+	struct AverageAndWCET copy1024ByteStructResult;
+};
+
+struct AverageAndWCET test_addTwoRandom32BitIntegers();
+struct AverageAndWCET test_addTwoRandom64BitIntegers();
+struct AverageAndWCET test_multiplyTwoRandom32BitIntegers();
+struct AverageAndWCET test_multiplyTwoRandom64BitIntegers();
+struct AverageAndWCET test_divideTwoRandom32BitIntegers();
+struct AverageAndWCET test_divideTwoRandom64BitIntegers();
+struct AverageAndWCET test_copy8ByteStruct();
+struct AverageAndWCET test_copy128ByteStruct();
+struct AverageAndWCET test_copy1024ByteStruct();
 
 struct TimerTestResults runTimerTests();
 void timerTestResultsToString(char *buf, struct TimerTestResults results);
