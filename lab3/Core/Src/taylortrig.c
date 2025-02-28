@@ -6,41 +6,73 @@
  */
 
 #include "taylortrig.h"
+#include "math.h"
 
-short tsin(short y){
-	const short S1 = 0x6488;
-	const short S2 = 0x2958;
-	const short S3 = 0x51a;
-	const short S4 = 0x4d;
+const int64_t BAM_RES = pow(2, 16);
 
-	long z, prod, sum;
-	z = ((long)y * y) >> 12;
+int sgn(double y){
+	if(y >= 0) return 1;
+	return -1;
+}
 
-	prod = (z * S4) >> 16;
-	sum = S3 - prod;
+// Converts any rad value to one in the range -PI to PI
+double radToRange(double rad){
+	return rad;
+	if(rad > M_PI){
+		rad = rad - M_PI;
+	}
+	else if(rad < -M_PI){
+		rad = rad + M_PI;
+	}
+	return rad;
+}
+
+// Pre: rad between -PI & PI
+int16_t radToBAM(double rad){
+	double round = 0.5*sgn(rad);
+	double result = (rad/(2*M_PI)) * BAM_RES;
+	return (int16_t)(result+round);
+}
+
+// Pre: bam between -PI & PI in bam units
+double BAMToRad(int16_t bam){
+	return (bam*M_PI*2) / BAM_RES;
+}
+
+int16_t tsin(int16_t y){
+	const int16_t S1 = 0x6488;
+	const int16_t S3 = 0x2958;
+	const int16_t S5 = 0x051a;
+	const int16_t S7 = 0x004d;
+
+	int64_t z, prod, sum;
+	z = ((int64_t)y * y) >> 12;
+
+	prod = (z * S7) >> 16;
+	sum = S5 - prod;
 	prod = (z * sum) >> 16;
-	sum = S2 - prod;
+	sum = S3 - prod;
 	prod = (z * sum) >> 16;
 	sum = S1 - prod;
 
-	return (short)((y * sum) >> 13);
+	return (int16_t)((y * sum) >> 13);
 }
 
-short tcos(short y){
-	const short C1 = 0x7fff;
-	const short C2 = 0x4ef5;
-	const short C3 = 0x103e;
-	const short C4 = 0x156;
+int16_t tcos(int16_t y){
+	const int16_t C0 = 0x7fff;
+	const int16_t C2 = 0x4ef5;
+	const int16_t C4 = 0x103e;
+	const int16_t C6 = 0x0156;
 
-	long z, prod, sum;
-	z = ((long)y * y) >> 12;
+	int64_t z, prod, sum;
+	z = ((int64_t)y * y) >> 12;
 
-	prod = (z * C4) >> 16;
-	sum = C3 - prod;
+	prod = (z * C6) >> 16;
+	sum = C4 - prod;
 	prod = (z * sum) >> 16;
 	sum = C2 - prod;
 	prod = (z * sum) >> 15;
-	sum = C1 - prod;
+	sum = C0 - prod;
 
-	return (short)(sum);
+	return (int16_t)(sum);
 }

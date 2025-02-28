@@ -12,19 +12,25 @@
 
 const int MAX_TRIG_TRIALS = 100;
 
-struct TestResult test_normalSin(){
-	srand(timer_start());
+double genTestVal(){
+	double min = -M_PI;
+	double max = M_PI;
+	double range = (max - min);
+	double div = RAND_MAX / range;
+	return min + (rand() / div);
+}
 
+struct TestResult test_normalSin(){
 	uint32_t averageTime = 0;
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIG_TRIALS; i++){
-		short y = (short)rand();
+		double y = genTestVal();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		volatile short x = sin(y);
+		volatile double x = sin(y);
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -48,12 +54,12 @@ struct TestResult test_normalCos(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIG_TRIALS; i++){
-		short y = (short)rand();
+		double y = genTestVal();
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		volatile short x = cos(y);
+		volatile double x = cos(y);
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -77,12 +83,13 @@ struct TestResult test_taylorSin(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIG_TRIALS; i++){
-		short y = (short)rand();
+		double _y = radToRange(genTestVal());
+		int32_t y = radToBAM(_y);
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		volatile short x = tsin(y);
+		volatile int32_t x = tsin(y);
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -106,12 +113,13 @@ struct TestResult test_taylorCos(){
 	uint32_t wcet = 0;
 
 	for(int i=0; i<MAX_TRIG_TRIALS; i++){
-		short y = (short)rand();
+		double _y = radToRange(genTestVal());
+		int32_t y = radToBAM(_y);
 
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 		uint16_t start = timer_start();
 
-		volatile short x = tcos(y);
+		volatile int32_t x = tcos(y);
 
 		uint16_t diff = timer_stop(start);
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -132,6 +140,8 @@ struct TrigTestResults runTrigTimerTests(){
 	struct TrigTestResults results;
 
 	timer_init();
+
+	srand(timer_start());
 
 	results.normalSin = test_normalSin();
 	results.normalCos = test_normalCos();
@@ -163,20 +173,28 @@ void trigTimerTestResultsToString(char *buf, struct TrigTestResults results){
 }
 
 void trigFunctionsTestToString(char *buf){
-	short y = 0x1555;
+	//double rad = genTestVal();
+	double rad = M_PI/6;
+	int16_t bam = radToBAM(rad);
 
-	short normalSin = sin(y);
-	short normalCos = cos(y);
-	short taylorSin = tsin(y);
-	short taylorCos = tcos(y);
+	double normalSin = sin(rad);
+	double normalCos = cos(rad);
+	double taylorSin = BAMToRad(tsin(bam));
+	double taylorCos = BAMToRad(tcos(bam));
 
 	sprintf(buf,
 		"Trig Results\n\r"
 		"==========================\n\r"
-		"normal sin = %hd\n\r"
-		"normal cos = %hd\n\r"
-		"taylor sin = %hd\n\r"
-		"taylor cos = %hd\n\r",
+		"rad = %f\n\r"
+		"bam = 0x%02X\n\r"
+		"rad_to_bam_to_rad = %f\n\r"
+		"normal sin = %f\n\r"
+		"normal cos = %f\n\r"
+		"taylor sin = %f\n\r"
+		"taylor cos = %f\n\r",
+		rad,
+		bam,
+		BAMToRad(bam),
 		normalSin,
 		normalCos,
 		taylorSin,
