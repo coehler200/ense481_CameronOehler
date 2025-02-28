@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "timertests.h"
 #include "rccinfo.h"
+#include "trigtests.h"
 
 #define MAX_DATA 64
 #define MAX_TOKENS 16
@@ -23,6 +24,8 @@ char *PROMPT = "> ";
 char *HELP = "Available Commands\r\n"
 		"===================\r\n"
 		"timerTests - run the timer test suite and print results\r\n"
+		"trigTimerTests - run the trig timer test suite and print results\r\n"
+		"trigTest - print out results of functions sin, cos, tsin, tcos\r\n"
 		"printRCC - print the clock tree information from RCC\r\n"
 		"clear - clears the screen\r\n"
 		"help - display this message\r\n";
@@ -64,6 +67,27 @@ void processCommand(char** tokens, int numTokens){
 			struct TimerTestResults results = runTimerTests();
 			char buf[TX_BUFFER_SIZE] = "";
 			timerTestResultsToString(buf, results);
+			strcat(txBuffer, buf);
+		}
+	}
+	else if(strcmp(currentToken, "trigTimerTests") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+			struct TrigTestResults results = runTrigTimerTests();
+			char buf[TX_BUFFER_SIZE] = "";
+			trigTimerTestResultsToString(buf, results);
+			strcat(txBuffer, buf);
+		}
+	}
+	else if(strcmp(currentToken, "trigTest") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+			char buf[TX_BUFFER_SIZE] = "";
+			trigFunctionsTestToString(buf);
 			strcat(txBuffer, buf);
 		}
 	}
