@@ -173,8 +173,14 @@ void trigTimerTestResultsToString(char *buf, struct TrigTestResults results){
 }
 
 void trigFunctionsTestToString(char *buf){
+	timer_init();
+	srand(timer_start());
+
 	//double rad = genTestVal();
-	double rad = M_PI/6;
+
+	timer_shutdown();
+
+	double rad = 0.0872665;
 	int16_t bam = radToBAM(rad);
 
 	double normalSin = sin(rad);
