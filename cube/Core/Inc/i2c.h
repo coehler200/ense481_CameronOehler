@@ -16,4 +16,8 @@ extern I2C_HandleTypeDef hi2c1;
 bool sendI2cDataBlocking(uint8_t *data, uint16_t addr, uint16_t size);
 bool recieveI2cDataBlocking(uint8_t *data, uint16_t addr, uint16_t size);
 
+bool sendI2cByteBlocking(uint8_t data, uint16_t addr);
+bool sendI2cCmdBlocking(uint8_t reg, uint8_t data, uint16_t addr);
+uint8_t recieveI2cByteBlocking(uint16_t addr);
+
 #endif /* INC_I2C_H_ */
