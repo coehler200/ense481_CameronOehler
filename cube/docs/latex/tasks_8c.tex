@@ -1,0 +1,45 @@
+\doxysection{Core/\+Src/tasks.c File Reference}
+\hypertarget{tasks_8c}{}\label{tasks_8c}\index{Core/Src/tasks.c@{Core/Src/tasks.c}}
+
+
+Provides the entry point for tasks in the system.  
+
+
+{\ttfamily \#include "{}tasks.\+h"{}}\newline
+{\ttfamily \#include "{}cli.\+h"{}}\newline
+{\ttfamily \#include "{}cmsis\+\_\+os2.\+h"{}}\newline
+{\ttfamily \#include "{}9dof.\+h"{}}\newline
+{\ttfamily \#include "{}serial.\+h"{}}\newline
+{\ttfamily \#include "{}string.\+h"{}}\newline
+{\ttfamily \#include "{}stdio.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{tasks_8c_a23719870d95479c2e866aa2b7eb9619a}{Start\+Read\+Imu}} (void \texorpdfstring{$\ast$}{*}argument)
+\item 
+void \mbox{\hyperlink{tasks_8c_a116f57e061c4335384203491700dd6aa}{Start\+Cli}} (void \texorpdfstring{$\ast$}{*}argument)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides the entry point for tasks in the system. 
+
+\begin{DoxyAuthor}{Author}
+Cameron Oehler
+\end{DoxyAuthor}
+Created on\+: Mar 23, 2025 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{tasks_8c_a116f57e061c4335384203491700dd6aa}\index{tasks.c@{tasks.c}!StartCli@{StartCli}}
+\index{StartCli@{StartCli}!tasks.c@{tasks.c}}
+\doxysubsubsection{\texorpdfstring{StartCli()}{StartCli()}}
+{\footnotesize\ttfamily \label{tasks_8c_a116f57e061c4335384203491700dd6aa} 
+void Start\+Cli (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+Entry point for the task Cli \Hypertarget{tasks_8c_a23719870d95479c2e866aa2b7eb9619a}\index{tasks.c@{tasks.c}!StartReadImu@{StartReadImu}}
+\index{StartReadImu@{StartReadImu}!tasks.c@{tasks.c}}
+\doxysubsubsection{\texorpdfstring{StartReadImu()}{StartReadImu()}}
+{\footnotesize\ttfamily \label{tasks_8c_a23719870d95479c2e866aa2b7eb9619a} 
+void Start\+Read\+Imu (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+Entry point for the task Read\+Imu 

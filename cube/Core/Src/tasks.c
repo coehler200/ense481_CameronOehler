@@ -1,9 +1,14 @@
-/*
- * tasks.c
- *
- *  Created on: Mar 23, 2025
- *      Author: coehl
- */
+/**
+  ******************************************************************************
+  * @file     tasks.c
+  * @brief    Provides the entry point for tasks in the system
+  * @author   Cameron Oehler
+  ******************************************************************************
+  *
+  *	Created on: Mar 23, 2025
+  *
+  ******************************************************************************
+  */
 
 #include "tasks.h"
 #include "cli.h"
@@ -16,6 +21,10 @@
 #include "stdio.h"
 // End prev comment
 
+/**
+ * Entry point for the task ReadImu
+ *
+*/
 void StartReadImu(void *argument){
 	// TODO: Make this a proper task in own file
 	setupL3GD20H();
@@ -28,6 +37,10 @@ void StartReadImu(void *argument){
 	}
 }
 
+/**
+ * Entry point for the task Cli
+ *
+*/
 void StartCli(void *argument){
 	setupCli();
 	pollCli();

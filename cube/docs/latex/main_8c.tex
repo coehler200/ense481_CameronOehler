@@ -1,0 +1,209 @@
+\doxysection{Core/\+Src/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{Core/Src/main.c@{Core/Src/main.c}}
+
+
+Program to read from IMU and send over BLE to remote renderer.  
+
+
+{\ttfamily \#include "{}main.\+h"{}}\newline
+{\ttfamily \#include "{}cmsis\+\_\+os.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config}} (void)
+\begin{DoxyCompactList}\small\item\em System Clock Configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_ab58f1beae00db13f43f62a632c23a2d3}{Start\+Read\+Imu}} (void \texorpdfstring{$\ast$}{*}argument)
+\begin{DoxyCompactList}\small\item\em Function implementing the read\+Imu thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a66ecf157f65896e3b5e4c408bfd5a220}{Start\+Cli}} (void \texorpdfstring{$\ast$}{*}argument)
+\begin{DoxyCompactList}\small\item\em Function implementing the cli thread. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em The application entry point. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}{HAL\+\_\+\+TIM\+\_\+\+Period\+Elapsed\+Callback}} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}htim)
+\begin{DoxyCompactList}\small\item\em Period elapsed callback in non blocking mode. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a1730ffe1e560465665eb47d9264826f9}{Error\+\_\+\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em This function is executed in case of error occurrence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{main_8c_af7b2c26e44dadaaa798a5c3d82914ba7} 
+I2\+C\+\_\+\+Handle\+Type\+Def {\bfseries hi2c1}
+\item 
+\Hypertarget{main_8c_ab9da65f935e805137e2eb4e18c5ab224}\label{main_8c_ab9da65f935e805137e2eb4e18c5ab224} 
+SPI\+\_\+\+Handle\+Type\+Def {\bfseries hspi2}
+\item 
+\Hypertarget{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}\label{main_8c_aa9479c261d65eecedd3d9582f7f0f89c} 
+UART\+\_\+\+Handle\+Type\+Def {\bfseries huart2}
+\item 
+\Hypertarget{main_8c_a7f2c4429511a8777d25b50446a5c63c3}\label{main_8c_a7f2c4429511a8777d25b50446a5c63c3} 
+os\+Thread\+Id\+\_\+t {\bfseries read\+Imu\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \mbox{\hyperlink{main_8c_ad0a84ea01445058bee6cb8e492439f4b}{read\+Imu\+\_\+attributes}}
+\item 
+\Hypertarget{main_8c_aa9c38646dd23e60577e7fd27b6e4b6fc}\label{main_8c_aa9c38646dd23e60577e7fd27b6e4b6fc} 
+os\+Thread\+Id\+\_\+t {\bfseries cli\+Handle}
+\item 
+const os\+Thread\+Attr\+\_\+t \mbox{\hyperlink{main_8c_a059526a8c8fe9b8efc4dbf1dc327a342}{cli\+\_\+attributes}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Program to read from IMU and send over BLE to remote renderer. 
+
+\begin{DoxyAuthor}{Author}
+Cameron Oehler
+\end{DoxyAuthor}
+Cube Visualizer is a program developed for the embedded system STM32\+F103\+RB. The program is an RTOS which reads data from a 9DOF sensor and sends this data over BLE to a visual renderer on another system. There is also a USART command line interface for interacting with the system.
+
+Created on\+: Mar 7, 2025
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2025 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a1730ffe1e560465665eb47d9264826f9}\index{main.c@{main.c}!Error\_Handler@{Error\_Handler}}
+\index{Error\_Handler@{Error\_Handler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{Error\_Handler()}{Error\_Handler()}}
+{\footnotesize\ttfamily \label{main_8c_a1730ffe1e560465665eb47d9264826f9} 
+void Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+This function is executed in case of error occurrence. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}\index{main.c@{main.c}!HAL\_TIM\_PeriodElapsedCallback@{HAL\_TIM\_PeriodElapsedCallback}}
+\index{HAL\_TIM\_PeriodElapsedCallback@{HAL\_TIM\_PeriodElapsedCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIM\_PeriodElapsedCallback()}{HAL\_TIM\_PeriodElapsedCallback()}}
+{\footnotesize\ttfamily \label{main_8c_a8a3b0ad512a6e6c6157440b68d395eac} 
+void HAL\+\_\+\+TIM\+\_\+\+Period\+Elapsed\+Callback (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{htim}{}\end{DoxyParamCaption})}
+
+
+
+Period elapsed callback in non blocking mode. 
+
+\begin{DoxyNote}{Note}
+This function is called when TIM1 interrupt took place, inside HAL\+\_\+\+TIM\+\_\+\+IRQHandler(). It makes a direct call to HAL\+\_\+\+Inc\+Tick() to increment a global variable "{}uw\+Tick"{} used as application time base. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em htim} & \+: TIM handle \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8c_a840291bc02cba5474a4cb46a9b9566fe} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+The application entry point. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em int} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a66ecf157f65896e3b5e4c408bfd5a220}\index{main.c@{main.c}!StartCli@{StartCli}}
+\index{StartCli@{StartCli}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{StartCli()}{StartCli()}}
+{\footnotesize\ttfamily \label{main_8c_a66ecf157f65896e3b5e4c408bfd5a220} 
+\+\_\+\+\_\+weak void Start\+Cli (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+
+
+Function implementing the cli thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_ab58f1beae00db13f43f62a632c23a2d3}\index{main.c@{main.c}!StartReadImu@{StartReadImu}}
+\index{StartReadImu@{StartReadImu}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{StartReadImu()}{StartReadImu()}}
+{\footnotesize\ttfamily \label{main_8c_ab58f1beae00db13f43f62a632c23a2d3} 
+\+\_\+\+\_\+weak void Start\+Read\+Imu (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{argument}{}\end{DoxyParamCaption})}
+
+
+
+Function implementing the read\+Imu thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argument} & Not used \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\index{main.c@{main.c}!SystemClock\_Config@{SystemClock\_Config}}
+\index{SystemClock\_Config@{SystemClock\_Config}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{SystemClock\_Config()}{SystemClock\_Config()}}
+{\footnotesize\ttfamily \label{main_8c_a70af21c671abfcc773614a9a4f63d920} 
+void System\+Clock\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+System Clock Configuration. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+Initializes the RCC Oscillators according to the specified parameters in the RCC\+\_\+\+Osc\+Init\+Type\+Def structure.
+
+Initializes the CPU, AHB and APB buses clocks
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8c_a059526a8c8fe9b8efc4dbf1dc327a342}\index{main.c@{main.c}!cli\_attributes@{cli\_attributes}}
+\index{cli\_attributes@{cli\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{cli\_attributes}{cli\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_a059526a8c8fe9b8efc4dbf1dc327a342} 
+const os\+Thread\+Attr\+\_\+t cli\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}cli"{}},}
+\DoxyCodeLine{\ \ .stack\_size\ =\ 512\ *\ 4,}
+\DoxyCodeLine{\ \ .priority\ =\ (osPriority\_t)\ osPriorityNormal,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_ad0a84ea01445058bee6cb8e492439f4b}\index{main.c@{main.c}!readImu\_attributes@{readImu\_attributes}}
+\index{readImu\_attributes@{readImu\_attributes}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{readImu\_attributes}{readImu\_attributes}}
+{\footnotesize\ttfamily \label{main_8c_ad0a84ea01445058bee6cb8e492439f4b} 
+const os\+Thread\+Attr\+\_\+t read\+Imu\+\_\+attributes}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}readImu"{}},}
+\DoxyCodeLine{\ \ .stack\_size\ =\ 128\ *\ 4,}
+\DoxyCodeLine{\ \ .priority\ =\ (osPriority\_t)\ osPriorityNormal,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

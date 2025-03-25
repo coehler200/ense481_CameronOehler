@@ -1,0 +1,38 @@
+\doxysection{cli.\+h}
+\hypertarget{cli_8h_source}{}\label{cli_8h_source}\index{Core/Inc/cli.h@{Core/Inc/cli.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ cli.h}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ \ Created\ on:\ Oct\ 8,\ 2024}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ \ Updated\ on:\ Feb\ 13,\ 2025}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ \ \ \ \ \ Author:\ coehl}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ INC\_CLI\_H\_}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ INC\_CLI\_H\_}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}stm32f1xx\_hal.h"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{extern}\ UART\_HandleTypeDef\ huart2;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Clears\ the\ screen,\ and\ prints\ prompt\ in\ interrupt\ mode}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{void}\ setupCliWithInterrupt();}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ Clears\ the\ screen,\ and\ prints\ prompt\ in\ non-\/interrupt\ mode}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00024\ \textcolor{keywordtype}{void}\ setupCli();}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ Poll\ serial\ for\ single\ character,\ store\ characters\ entered,\ and\ process}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ command\ on\ enter.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00030\ \textcolor{keywordtype}{void}\ pollCli();}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ INC\_CLI\_H\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

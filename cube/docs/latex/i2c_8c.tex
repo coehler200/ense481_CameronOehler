@@ -1,0 +1,128 @@
+\doxysection{Core/\+Src/i2c.c File Reference}
+\hypertarget{i2c_8c}{}\label{i2c_8c}\index{Core/Src/i2c.c@{Core/Src/i2c.c}}
+
+
+Functions to communicate with the I2C system.  
+
+
+{\ttfamily \#include "{}i2c.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{i2c_8c_a5f6bdd4a2d8032e6e34097dfb109dd9f}{send\+I2c\+Data\+Blocking}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, uint16\+\_\+t addr, uint16\+\_\+t size)
+\item 
+bool \mbox{\hyperlink{i2c_8c_ada6595ad94102df2b6b559cbd3855eab}{recieve\+I2c\+Data\+Blocking}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, uint16\+\_\+t addr, uint16\+\_\+t size)
+\item 
+bool \mbox{\hyperlink{i2c_8c_a502f1e491f7c17f9a46e3930bf442c0e}{send\+I2c\+Byte\+Blocking}} (uint8\+\_\+t data, uint16\+\_\+t addr)
+\item 
+bool \mbox{\hyperlink{i2c_8c_a4c6cdb5d920a97981c6babf989fff9e4}{send\+I2c\+Cmd\+Blocking}} (uint8\+\_\+t reg, uint8\+\_\+t data, uint16\+\_\+t addr)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{i2c_8c_a65e37205b463548211ca21900d45269a}{recieve\+I2c\+Byte\+Blocking}} (uint16\+\_\+t addr)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions to communicate with the I2C system. 
+
+\begin{DoxyAuthor}{Author}
+Cameron Oehler
+\end{DoxyAuthor}
+Various helper functions to easily integrate code with I2C
+
+Created on\+: Mar 24, 2025 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{i2c_8c_a65e37205b463548211ca21900d45269a}\index{i2c.c@{i2c.c}!recieveI2cByteBlocking@{recieveI2cByteBlocking}}
+\index{recieveI2cByteBlocking@{recieveI2cByteBlocking}!i2c.c@{i2c.c}}
+\doxysubsubsection{\texorpdfstring{recieveI2cByteBlocking()}{recieveI2cByteBlocking()}}
+{\footnotesize\ttfamily \label{i2c_8c_a65e37205b463548211ca21900d45269a} 
+uint8\+\_\+t recieve\+I2c\+Byte\+Blocking (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{addr}{}\end{DoxyParamCaption})}
+
+Receive a single byte through I2C in a blocking mode
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & the i2c address of the device to receive from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Byte received (or \textquotesingle{}0\textquotesingle{} if error) 
+\end{DoxyReturn}
+\Hypertarget{i2c_8c_ada6595ad94102df2b6b559cbd3855eab}\index{i2c.c@{i2c.c}!recieveI2cDataBlocking@{recieveI2cDataBlocking}}
+\index{recieveI2cDataBlocking@{recieveI2cDataBlocking}!i2c.c@{i2c.c}}
+\doxysubsubsection{\texorpdfstring{recieveI2cDataBlocking()}{recieveI2cDataBlocking()}}
+{\footnotesize\ttfamily \label{i2c_8c_ada6595ad94102df2b6b559cbd3855eab} 
+bool recieve\+I2c\+Data\+Blocking (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{uint16\+\_\+t}]{addr}{, }\item[{uint16\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+
+Receive data through I2C in a blocking mode
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & a pointer to memory where the data can be saved \\
+\hline
+{\em addr} & the i2c address of the device to receive from \\
+\hline
+{\em size} & the number of bytes to receive \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Success flag 
+\end{DoxyReturn}
+\Hypertarget{i2c_8c_a502f1e491f7c17f9a46e3930bf442c0e}\index{i2c.c@{i2c.c}!sendI2cByteBlocking@{sendI2cByteBlocking}}
+\index{sendI2cByteBlocking@{sendI2cByteBlocking}!i2c.c@{i2c.c}}
+\doxysubsubsection{\texorpdfstring{sendI2cByteBlocking()}{sendI2cByteBlocking()}}
+{\footnotesize\ttfamily \label{i2c_8c_a502f1e491f7c17f9a46e3930bf442c0e} 
+bool send\+I2c\+Byte\+Blocking (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{data}{, }\item[{uint16\+\_\+t}]{addr}{}\end{DoxyParamCaption})}
+
+Send a single byte through I2C in a blocking mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & a single byte of data to be sent \\
+\hline
+{\em addr} & the i2c address of the device to transmit to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Success flag 
+\end{DoxyReturn}
+\Hypertarget{i2c_8c_a4c6cdb5d920a97981c6babf989fff9e4}\index{i2c.c@{i2c.c}!sendI2cCmdBlocking@{sendI2cCmdBlocking}}
+\index{sendI2cCmdBlocking@{sendI2cCmdBlocking}!i2c.c@{i2c.c}}
+\doxysubsubsection{\texorpdfstring{sendI2cCmdBlocking()}{sendI2cCmdBlocking()}}
+{\footnotesize\ttfamily \label{i2c_8c_a4c6cdb5d920a97981c6babf989fff9e4} 
+bool send\+I2c\+Cmd\+Blocking (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{reg}{, }\item[{uint8\+\_\+t}]{data}{, }\item[{uint16\+\_\+t}]{addr}{}\end{DoxyParamCaption})}
+
+Send a two bytes, a register and data, through I2C in a blocking mode
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & the register of the i2c device to manipulate \\
+\hline
+{\em data} & the date to write to the i2c device at the register location \\
+\hline
+{\em addr} & the i2c address of the device to transmit to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Success flag 
+\end{DoxyReturn}
+\Hypertarget{i2c_8c_a5f6bdd4a2d8032e6e34097dfb109dd9f}\index{i2c.c@{i2c.c}!sendI2cDataBlocking@{sendI2cDataBlocking}}
+\index{sendI2cDataBlocking@{sendI2cDataBlocking}!i2c.c@{i2c.c}}
+\doxysubsubsection{\texorpdfstring{sendI2cDataBlocking()}{sendI2cDataBlocking()}}
+{\footnotesize\ttfamily \label{i2c_8c_a5f6bdd4a2d8032e6e34097dfb109dd9f} 
+bool send\+I2c\+Data\+Blocking (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{uint16\+\_\+t}]{addr}{, }\item[{uint16\+\_\+t}]{size}{}\end{DoxyParamCaption})}
+
+Send data through I2C in a blocking mode
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & a pointer to the data to be sent \\
+\hline
+{\em addr} & the i2c address of the device to transmit to \\
+\hline
+{\em size} & the number of bytes to transmit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Success flag 
+\end{DoxyReturn}

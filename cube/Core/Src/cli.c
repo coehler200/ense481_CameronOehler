@@ -1,12 +1,20 @@
-/*
- * cli.c
- *
- *  Created on: Oct 8, 2024
- *  Updated on: Dec 2, 2024
- *  Updated on: Feb 13, 2025
- *  Updated on: Mar 23, 2025
- *      Author: coehl
- */
+/**
+  ******************************************************************************
+  * @file     cli.c
+  * @brief    Provide cli communications
+  * @author   Cameron Oehler
+  ******************************************************************************
+  *
+  * This file provides methods for setting up, polling, and executing commands
+  * from a cli environment.
+  *
+  * Created on: Oct 8, 2024
+  * Updated on: Dec 2, 2024
+  * Updated on: Feb 13, 2025
+  * Updated on: Mar 23, 2025
+  *
+  ******************************************************************************
+  */
 
 #include "cli.h"
 #include <string.h>
@@ -15,8 +23,11 @@
 #include "version.h"
 #include "buildDate.h"
 
+/** Maximum number of characters to buffer */
 #define MAX_DATA 64
+/** Maximum number of tokens to parse */
 #define MAX_TOKENS 16
+/** Maximum size of the buffer to send a response */
 #define TX_BUFFER_SIZE 1024
 
 char *CLEAR_ENTIRE_SCREEN = "\x1b[2J\x1b[1;1H";
@@ -33,6 +44,14 @@ char data[MAX_DATA+1]; // Allow for \0 to be added
 uint16_t dataLen = 0;
 char rxBuffer[1];
 
+/**
+ * Given a string, break it into various tokens. ' ' is the delimiter.
+ *
+ * @param string the full command string
+ * @param tokens an empty array to be filled with parsed tokens
+ *
+ * @return the number of tokens parsed
+ */
 int tokenizeString(char* string, char** tokens){
 	char* savePtr = string;
     char* token;
@@ -45,6 +64,13 @@ int tokenizeString(char* string, char** tokens){
     return index;
 }
 
+/**
+ * Processes tokens into some output.
+ * This is where the actual functionality of the cli is determined.
+ *
+ * @param tokens the tokens that make up a command
+ * @param numTokens the number of tokens
+ */
 void processCommand(char** tokens, int numTokens){
 	char txBuffer[TX_BUFFER_SIZE] = "";
 	strcat(txBuffer, "\r\n");
@@ -124,11 +150,19 @@ void processCommand(char** tokens, int numTokens){
 //	while(1);
 //}
 
+/**
+ * Clear the screen and print the prompt
+ */
 void setupCli(){
 	serialPrintBlocking(CLEAR_ENTIRE_SCREEN, strlen(CLEAR_ENTIRE_SCREEN));
 	serialPrintBlocking(PROMPT, strlen(PROMPT));
 }
 
+/**
+ * Continuously poll the serial device for character input. Buffer input and
+ * remove buffered input on 'backspace'. On CR/LF pass the buffered command to
+ * the token parser and command processor.
+ */
 void pollCli(){
 	for(;;){
 		char c = receiveCharBlocking();

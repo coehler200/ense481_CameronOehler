@@ -1,0 +1,164 @@
+\doxysection{Core/\+Src/cli.c File Reference}
+\hypertarget{cli_8c}{}\label{cli_8c}\index{Core/Src/cli.c@{Core/Src/cli.c}}
+
+
+Provide cli communications.  
+
+
+{\ttfamily \#include "{}cli.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}serial.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}version.\+h"{}}\newline
+{\ttfamily \#include "{}build\+Date.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{cli_8c_aaf06a3762adb0aa04b8a5f8f016ca5e9}{MAX\+\_\+\+DATA}}~64
+\item 
+\#define \mbox{\hyperlink{cli_8c_a09886d6ba96e67553bf3c49ed8ade975}{MAX\+\_\+\+TOKENS}}~16
+\item 
+\#define \mbox{\hyperlink{cli_8c_a9ab33647617098646990fe263600b650}{TX\+\_\+\+BUFFER\+\_\+\+SIZE}}~1024
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{cli_8c_ac1b89fa7392b2f964ba05a82a37c7409}{tokenize\+String}} (char \texorpdfstring{$\ast$}{*}string, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}tokens)
+\item 
+void \mbox{\hyperlink{cli_8c_a4718c978efa2b27093294afb27efc1fd}{process\+Command}} (char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}tokens, int num\+Tokens)
+\item 
+void \mbox{\hyperlink{cli_8c_a04d0d1a0415fbcdcda26c5c7a1a2476f}{setup\+Cli}} ()
+\item 
+void \mbox{\hyperlink{cli_8c_af6848e1865b4252d9559950d8b781cee}{poll\+Cli}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{cli_8c_a0d82397cf7dd28f649f2ab48b791e098}\label{cli_8c_a0d82397cf7dd28f649f2ab48b791e098} 
+char \texorpdfstring{$\ast$}{*} {\bfseries CLEAR\+\_\+\+ENTIRE\+\_\+\+SCREEN} = "{}\textbackslash{}x1b\mbox{[}2J\textbackslash{}x1b\mbox{[}1;1H"{}
+\item 
+\Hypertarget{cli_8c_a9e33977453188fb1b8188b6baf83da4e}\label{cli_8c_a9e33977453188fb1b8188b6baf83da4e} 
+char \texorpdfstring{$\ast$}{*} {\bfseries PROMPT} = "{}$>$ "{}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{cli_8c_ae1bf94b6eb6f4bea49f867f83040b6ed}{HELP}}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{cli_8c_a2729b238a717753ad1efee47455b0763}{UNKNOWN\+\_\+\+CMD}}
+\item 
+\Hypertarget{cli_8c_a9c8eef502246ae546ecd0ff30fab203d}\label{cli_8c_a9c8eef502246ae546ecd0ff30fab203d} 
+char {\bfseries data} \mbox{[}\mbox{\hyperlink{cli_8c_aaf06a3762adb0aa04b8a5f8f016ca5e9}{MAX\+\_\+\+DATA}}+1\mbox{]}
+\item 
+\Hypertarget{cli_8c_ae058dd8f2f1a0c16b3947d6bfdbd51c2}\label{cli_8c_ae058dd8f2f1a0c16b3947d6bfdbd51c2} 
+uint16\+\_\+t {\bfseries data\+Len} = 0
+\item 
+\Hypertarget{cli_8c_a42b21e9990f34b71e2eb9aec0481be87}\label{cli_8c_a42b21e9990f34b71e2eb9aec0481be87} 
+char {\bfseries rx\+Buffer} \mbox{[}1\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provide cli communications. 
+
+\begin{DoxyAuthor}{Author}
+Cameron Oehler
+\end{DoxyAuthor}
+This file provides methods for setting up, polling, and executing commands from a cli environment.
+
+Created on\+: Oct 8, 2024 Updated on\+: Dec 2, 2024 Updated on\+: Feb 13, 2025 Updated on\+: Mar 23, 2025 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{cli_8c_aaf06a3762adb0aa04b8a5f8f016ca5e9}\index{cli.c@{cli.c}!MAX\_DATA@{MAX\_DATA}}
+\index{MAX\_DATA@{MAX\_DATA}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_DATA}{MAX\_DATA}}
+{\footnotesize\ttfamily \label{cli_8c_aaf06a3762adb0aa04b8a5f8f016ca5e9} 
+\#define MAX\+\_\+\+DATA~64}
+
+Maximum number of characters to buffer \Hypertarget{cli_8c_a09886d6ba96e67553bf3c49ed8ade975}\index{cli.c@{cli.c}!MAX\_TOKENS@{MAX\_TOKENS}}
+\index{MAX\_TOKENS@{MAX\_TOKENS}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_TOKENS}{MAX\_TOKENS}}
+{\footnotesize\ttfamily \label{cli_8c_a09886d6ba96e67553bf3c49ed8ade975} 
+\#define MAX\+\_\+\+TOKENS~16}
+
+Maximum number of tokens to parse \Hypertarget{cli_8c_a9ab33647617098646990fe263600b650}\index{cli.c@{cli.c}!TX\_BUFFER\_SIZE@{TX\_BUFFER\_SIZE}}
+\index{TX\_BUFFER\_SIZE@{TX\_BUFFER\_SIZE}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{TX\_BUFFER\_SIZE}{TX\_BUFFER\_SIZE}}
+{\footnotesize\ttfamily \label{cli_8c_a9ab33647617098646990fe263600b650} 
+\#define TX\+\_\+\+BUFFER\+\_\+\+SIZE~1024}
+
+Maximum size of the buffer to send a response 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{cli_8c_af6848e1865b4252d9559950d8b781cee}\index{cli.c@{cli.c}!pollCli@{pollCli}}
+\index{pollCli@{pollCli}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{pollCli()}{pollCli()}}
+{\footnotesize\ttfamily \label{cli_8c_af6848e1865b4252d9559950d8b781cee} 
+void poll\+Cli (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Continuously poll the serial device for character input. Buffer input and remove buffered input on \textquotesingle{}backspace\textquotesingle{}. On CR/\+LF pass the buffered command to the token parser and command processor. \Hypertarget{cli_8c_a4718c978efa2b27093294afb27efc1fd}\index{cli.c@{cli.c}!processCommand@{processCommand}}
+\index{processCommand@{processCommand}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{processCommand()}{processCommand()}}
+{\footnotesize\ttfamily \label{cli_8c_a4718c978efa2b27093294afb27efc1fd} 
+void process\+Command (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{tokens}{, }\item[{int}]{num\+Tokens}{}\end{DoxyParamCaption})}
+
+Processes tokens into some output. This is where the actual functionality of the cli is determined.
+
+
+\begin{DoxyParams}{Parameters}
+{\em tokens} & the tokens that make up a command \\
+\hline
+{\em num\+Tokens} & the number of tokens \\
+\hline
+\end{DoxyParams}
+\Hypertarget{cli_8c_a04d0d1a0415fbcdcda26c5c7a1a2476f}\index{cli.c@{cli.c}!setupCli@{setupCli}}
+\index{setupCli@{setupCli}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{setupCli()}{setupCli()}}
+{\footnotesize\ttfamily \label{cli_8c_a04d0d1a0415fbcdcda26c5c7a1a2476f} 
+void setup\+Cli (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Clear the screen and print the prompt \Hypertarget{cli_8c_ac1b89fa7392b2f964ba05a82a37c7409}\index{cli.c@{cli.c}!tokenizeString@{tokenizeString}}
+\index{tokenizeString@{tokenizeString}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{tokenizeString()}{tokenizeString()}}
+{\footnotesize\ttfamily \label{cli_8c_ac1b89fa7392b2f964ba05a82a37c7409} 
+int tokenize\+String (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{string}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{tokens}{}\end{DoxyParamCaption})}
+
+Given a string, break it into various tokens. \textquotesingle{} \textquotesingle{} is the delimiter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & the full command string \\
+\hline
+{\em tokens} & an empty array to be filled with parsed tokens\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of tokens parsed 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{cli_8c_ae1bf94b6eb6f4bea49f867f83040b6ed}\index{cli.c@{cli.c}!HELP@{HELP}}
+\index{HELP@{HELP}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{HELP}{HELP}}
+{\footnotesize\ttfamily \label{cli_8c_ae1bf94b6eb6f4bea49f867f83040b6ed} 
+char\texorpdfstring{$\ast$}{*} HELP}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{stringliteral}{"{}Available\ Commands\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}===================\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}printBinInfo\ -\/\ print\ version\ and\ build\ info\ for\ the\ binary\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}clear\ -\/\ clears\ the\ screen\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}help\ -\/\ display\ this\ message\(\backslash\)r\(\backslash\)n"{}}}
+
+\end{DoxyCode}
+\Hypertarget{cli_8c_a2729b238a717753ad1efee47455b0763}\index{cli.c@{cli.c}!UNKNOWN\_CMD@{UNKNOWN\_CMD}}
+\index{UNKNOWN\_CMD@{UNKNOWN\_CMD}!cli.c@{cli.c}}
+\doxysubsubsection{\texorpdfstring{UNKNOWN\_CMD}{UNKNOWN\_CMD}}
+{\footnotesize\ttfamily \label{cli_8c_a2729b238a717753ad1efee47455b0763} 
+char\texorpdfstring{$\ast$}{*} UNKNOWN\+\_\+\+CMD}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \textcolor{stringliteral}{"{}Unknown\ command.\ "{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Use\ 'help'\ for\ list\ of\ valid\ commands.\(\backslash\)r\(\backslash\)n"{}}}
+
+\end{DoxyCode}

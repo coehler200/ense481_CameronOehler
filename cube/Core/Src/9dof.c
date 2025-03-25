@@ -1,14 +1,23 @@
-/*
- * 9dof.c
- *
- *  Created on: Mar 24, 2025
- *      Author: coehl
- */
+/**
+  ******************************************************************************
+  * @file     9dof.c
+  * @brief    Communicate with the Adafruit 9DOF board
+  * @author   Cameron Oehler
+  ******************************************************************************
+  *
+  *	Created on: Mar 24, 2025
+  *
+  ******************************************************************************
+  */
 
 #include "9dof.h"
-
 #include "i2c.h"
 
+/**
+ * Method to setup the L3GD20H device on the 9DOF board
+ *
+ * @return Success flag
+ */
 bool setupL3GD20H(void){
 	bool success = sendI2cCmdBlocking(0x20, 0x00, L3GD20_ADDRESS_GYRO); // GYRO_REGISTER_CTRL_REG1
 	if(!success) return false;
@@ -18,6 +27,11 @@ bool setupL3GD20H(void){
 	return true;
 }
 
+/**
+ * Method to setup the LSM303DLHC device on the 9DOF board
+ *
+ * @return Success flag
+ */
 bool setupLSM303DLHC(void){
 	bool success = sendI2cCmdBlocking(0x20, 0x57, LSM303_ADDRESS_ACCEL); // LSM303_REGISTER_ACCEL_CTRL_REG1_A
 	if(!success) return false;
@@ -28,6 +42,11 @@ bool setupLSM303DLHC(void){
 	return true;
 }
 
+/**
+ * Read raw data from the gyroscope
+ *
+ * @return Vec3 containing the x, y, z data
+ */
 struct Vec3 readGyroscope(void){
 	struct Vec3 data;
 		data.x = 0;
@@ -48,6 +67,11 @@ struct Vec3 readGyroscope(void){
 		return data;
 }
 
+/**
+ * Read raw data from the accelerometer
+ *
+ * @return Vec3 containing the x, y, z data
+ */
 struct Vec3 readAccelerometer(void){
 	struct Vec3 data;
 	data.x = 0;
@@ -68,6 +92,11 @@ struct Vec3 readAccelerometer(void){
 	return data;
 }
 
+/**
+ * Read raw data from the magnetism sensor
+ *
+ * @return Vec3 containing the x, y, z data
+ */
 struct Vec3 readMag(void){
 	struct Vec3 data;
 	data.x = 0;

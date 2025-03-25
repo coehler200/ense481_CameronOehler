@@ -1,19 +1,18 @@
 /* USER CODE BEGIN Header */
-/*
- * Created on: Mar 7, 2025
- * Author: Cameron Oehler
- *
- * Cube is a program developed for the embedded system STM32F103RB.
- * The program is an RTOS which reads data from a 9DOF sensor and
- * sends this data over BLE to a visual renderer on another system.
- * There is also a USART command line interface for interacting with
- * the system.
- */
 /**
   ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
+  * @file     main.c
+  * @brief    Program to read from IMU and send over BLE to remote renderer
+  * @author   Cameron Oehler
   ******************************************************************************
+  * Cube Visualizer is a program developed for the embedded system STM32F103RB.
+  * The program is an RTOS which reads data from a 9DOF sensor and
+  * sends this data over BLE to a visual renderer on another system.
+  * There is also a USART command line interface for interacting with
+  * the system.
+  *
+  *	Created on: Mar 7, 2025
+  *
   * @attention
   *
   * Copyright (c) 2025 STMicroelectronics.

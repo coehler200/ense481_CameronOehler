@@ -1,0 +1,42 @@
+\doxysection{serial.\+h}
+\hypertarget{serial_8h_source}{}\label{serial_8h_source}\index{Core/Inc/serial.h@{Core/Inc/serial.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ serial.h}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ \ Created\ on:\ Oct\ 23,\ 2024}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ \ Updated\ on:\ Feb\ 13,\ 2025}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ \ \ \ \ \ Author:\ coehl}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ INC\_SERIAL\_H\_}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ INC\_SERIAL\_H\_}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}stm32f1xx\_hal.h"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{extern}\ UART\_HandleTypeDef\ huart2;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ Print\ the\ msg\ to\ huart2\ in\ interrupt\ mode}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{void}\ serialPrint(\textcolor{keywordtype}{char}*\ msg,\ uint16\_t\ size);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ Print\ the\ msg\ to\ huart2\ in\ blocking\ mode}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00024\ \textcolor{keywordtype}{void}\ serialPrintBlocking(\textcolor{keywordtype}{char}*\ msg,\ uint16\_t\ size);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ Receive\ a\ single\ char\ from\ huart2\ in\ interrupt\ mode\ and\ store\ to\ buf}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00029\ \textcolor{keywordtype}{void}\ receiveChar(\textcolor{keywordtype}{char}\ *buf);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ Receive\ a\ single\ char\ from\ huart2\ in\ blocking\ mode\ and\ return}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00034\ \textcolor{keywordtype}{char}\ receiveCharBlocking();}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ INC\_SERIAL\_H\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}
