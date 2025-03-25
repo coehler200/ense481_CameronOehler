@@ -1,4 +1,14 @@
 /* USER CODE BEGIN Header */
+/*
+ * Created on: Mar 7, 2025
+ * Author: Cameron Oehler
+ *
+ * Cube is a program developed for the embedded system STM32F103RB.
+ * The program is an RTOS which reads data from a 9DOF sensor and
+ * sends this data over BLE to a visual renderer on another system.
+ * There is also a USART command line interface for interacting with
+ * the system.
+ */
 /**
   ******************************************************************************
   * @file           : main.c
