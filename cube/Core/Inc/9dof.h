@@ -16,17 +16,26 @@
 #define LSM303_ADDRESS_MAG            (0x1e << 1)         // 0011110x
 #define L3GD20_ADDRESS_GYRO           (0x6B << 1)         // 1101011x
 
+#define GYRO_REGISTER_CTRL_REG1       (0x20)
+#define GYRO_REGISTER_CTRL_REG4       (0x23)
+#define GYRO_REGISTER_OUT_X_L         (0x28)
+
+#define SENSORS_DPS_TO_RADS           (0.017453293F)
+#define GYRO_SENSITIVITY_250DPS       (0.00875F)
+#define GYRO_SENSITIVITY_500DPS       (0.0175F)
+#define GYRO_SENSITIVITY_2000DPS      (0.070F)
+
 struct Vec3 {
-	uint8_t x;
-	uint8_t y;
-	uint8_t z;
+	double x;
+	double y;
+	double z;
 };
 
 bool setupL3GD20H(void);
 bool setupLSM303DLHC(void);
 
-struct Vec3 readGyroscope(void);
-struct Vec3 readAccelerometer(void);
-struct Vec3 readMag(void);
+bool readGyroscope(struct Vec3 *data);
+bool readAccelerometer(struct Vec3 *data);
+bool readMag(struct Vec3 *data);
 
 #endif /* INC_9DOF_H_ */

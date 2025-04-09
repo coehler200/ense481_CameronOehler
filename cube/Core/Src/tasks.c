@@ -27,12 +27,18 @@
 */
 void StartReadImu(void *argument){
 	// TODO: Make this a proper task in own file
-	setupL3GD20H();
+	if(!setupL3GD20H()){
+		for(;;){
+			osDelay(1000);
+		}
+	}
 	for(;;){
-		struct Vec3 data = readGyroscope();
-		char buf[64] = "";
-		sprintf(buf, "x: %i, y: %i, z: %i\r\n", data.x, data.y, data.z);
-		serialPrintBlocking(buf, strlen(buf));
+		struct Vec3 data;
+		if(readGyroscope(&data)){
+			char buf[64] = "";
+			sprintf(buf, "x: %f, y: %f, z: %f\r\n", data.x, data.y, data.z);
+			serialPrintBlocking(buf, strlen(buf));
+		}
 		osDelay(1000);
 	}
 }
