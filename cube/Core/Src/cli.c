@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include "version.h"
 #include "buildDate.h"
+#include "cmsis_os2.h"
 
 /** Maximum number of characters to buffer */
 #define MAX_DATA 64
@@ -186,5 +187,6 @@ void pollCli(){
 				data[dataLen++] = c;
 			}
 		}
+		osDelay(10);
 	}
 }

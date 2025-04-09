@@ -34,12 +34,11 @@ void StartReadImu(void *argument){
 	}
 	for(;;){
 		struct Vec3 data;
+		char buf[64] = "";
 		if(readGyroscope(&data)){
-			char buf[64] = "";
 			sprintf(buf, "x: %f, y: %f, z: %f\r\n", data.x, data.y, data.z);
 			serialPrintBlocking(buf, strlen(buf));
 		}
-		osDelay(1000);
 	}
 }
 

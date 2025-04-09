@@ -26,9 +26,9 @@
 #define GYRO_SENSITIVITY_2000DPS      (0.070F)
 
 struct Vec3 {
-	double x;
-	double y;
-	double z;
+	float x;
+	float y;
+	float z;
 };
 
 bool setupL3GD20H(void);
