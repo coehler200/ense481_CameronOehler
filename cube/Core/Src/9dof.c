@@ -12,6 +12,7 @@
 
 #include "9dof.h"
 #include "i2c.h"
+#include <math.h>
 
 /**
  * Method to setup the L3GD20H device on the 9DOF board
@@ -21,8 +22,10 @@
 bool setupL3GD20H(void){
 	bool success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG1, 0x00, L3GD20_ADDRESS_GYRO);
 	if(!success) return false;
+
 	success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG1, 0x0F, L3GD20_ADDRESS_GYRO);
 	if(!success) return false;
+
 	//success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG4, 0x00, L3GD20_ADDRESS_GYRO);
 	//success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG4, 0x10, L3GD20_ADDRESS_GYRO);
 	success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG4, 0x20, L3GD20_ADDRESS_GYRO);
@@ -37,10 +40,10 @@ bool setupL3GD20H(void){
  * @return Success flag
  */
 bool setupLSM303DLHC(void){
-	bool success = sendI2cCmdBlocking(0x20, 0x57, LSM303_ADDRESS_ACCEL); // LSM303_REGISTER_ACCEL_CTRL_REG1_A
+	bool success = sendI2cCmdBlocking(LSM303_REGISTER_ACCEL_CTRL_REG1_A, 0x57, LSM303_ADDRESS_ACCEL);
 	if(!success) return false;
 
-	success = sendI2cCmdBlocking(0x02, 0x00, LSM303_ADDRESS_MAG); // LSM303_REGISTER_MAG_MR_REG_M
+	success = sendI2cCmdBlocking(LSM303_REGISTER_MAG_MR_REG_M, 0x00, LSM303_ADDRESS_MAG);
 	if(!success) return false;
 
 	return true;
@@ -63,6 +66,14 @@ bool readGyroscope(struct Vec3 *data){
 	data->y = ((int16_t)rawData[2] | ((int16_t)rawData[3] << 8));
 	data->z = ((int16_t)rawData[4] | ((int16_t)rawData[5] << 8));
 
+//	data->x *= GYRO_SENSITIVITY_250DPS;
+//	data->y *= GYRO_SENSITIVITY_250DPS;
+//	data->z *= GYRO_SENSITIVITY_250DPS;
+
+//	data->x *= GYRO_SENSITIVITY_500DPS;
+//	data->y *= GYRO_SENSITIVITY_500DPS;
+//	data->z *= GYRO_SENSITIVITY_500DPS;
+
 	data->x *= GYRO_SENSITIVITY_2000DPS;
 	data->y *= GYRO_SENSITIVITY_2000DPS;
 	data->z *= GYRO_SENSITIVITY_2000DPS;
@@ -80,7 +91,7 @@ bool readGyroscope(struct Vec3 *data){
  * @return Vec3 containing the x, y, z data
  */
 bool readAccelerometer(struct Vec3 *data){
-	bool success = sendI2cByteBlocking(0x28 | 0x80, LSM303_ADDRESS_ACCEL); // LSM303_REGISTER_ACCEL_OUT_X_L_A | 0x80
+	bool success = sendI2cByteBlocking(LSM303_REGISTER_ACCEL_OUT_X_L_A | 0x80, LSM303_ADDRESS_ACCEL);
 	if(!success) return false;
 
 	uint8_t rawData[6];
@@ -91,6 +102,10 @@ bool readAccelerometer(struct Vec3 *data){
 	data->y = (int16_t)(rawData[2] | (rawData[3] << 8)) >> 4;
 	data->z = (int16_t)(rawData[4] | (rawData[5] << 8)) >> 4;
 
+	data->x *= LSM303ACCEL_MG_LSB * SENSORS_GRAVITY_STANDARD;
+	data->y *= LSM303ACCEL_MG_LSB * SENSORS_GRAVITY_STANDARD;
+	data->z *= LSM303ACCEL_MG_LSB * SENSORS_GRAVITY_STANDARD;
+
 	return true;
 }
 
@@ -100,16 +115,61 @@ bool readAccelerometer(struct Vec3 *data){
  * @return Vec3 containing the x, y, z data
  */
 bool readMag(struct Vec3 *data){
-	bool success = sendI2cByteBlocking(0x03, LSM303_ADDRESS_MAG); // LSM303_REGISTER_MAG_OUT_X_H_M
+	bool success = sendI2cByteBlocking(LSM303_REGISTER_MAG_OUT_X_H_M, LSM303_ADDRESS_MAG);
 	if(!success) return false;
 
 	uint8_t rawData[6];
 	success = recieveI2cDataBlocking(rawData, LSM303_ADDRESS_MAG, 6);
 	if(!success) return false;
 
-	data->x = (int16_t)(rawData[1] | ((int16_t)rawData[0] << 8));
-	data->y = (int16_t)(rawData[3] | ((int16_t)rawData[2] << 8));
-	data->z = (int16_t)(rawData[5] | ((int16_t)rawData[4] << 8));
+	data->x = (int16_t)((int16_t)rawData[1] | ((int16_t)rawData[0] << 8));
+	data->y = (int16_t)((int16_t)rawData[5] | ((int16_t)rawData[4] << 8));
+	data->z = (int16_t)((int16_t)rawData[3] | ((int16_t)rawData[2] << 8));
+
+	data->x /= LSM303MAG_GAUSS_LSB_XY * SENSORS_GAUSS_TO_MICROTESLA;
+	data->y /= LSM303MAG_GAUSS_LSB_XY * SENSORS_GAUSS_TO_MICROTESLA;
+	data->z /= LSM303MAG_GAUSS_LSB_Z * SENSORS_GAUSS_TO_MICROTESLA;
+
+	return true;
+}
+
+/**
+ * Calculate roll, pitch, and heading
+ *
+ * @return Vec3 containing the x(roll), y(pitch), z(heading) data
+ */
+bool getOrientation(struct Vec3 *data){
+	struct Vec3 accel_data;
+	struct Vec3 mag_data;
+
+	if(!readAccelerometer(&accel_data)){
+		return false;
+	}
+
+	if(!readMag(&mag_data)){
+		return false;
+	}
+
+	// roll
+	data->x = (float)atan2(accel_data.y, accel_data.z);
+
+	// pitch
+	if(accel_data.y * sin(data->x) + accel_data.z * cos(data->x) == 0){
+		data->y = accel_data.x > 0 ? (PI / 2) : (-PI / 2);
+	}
+	else{
+		data->y = (float)atan(-accel_data.x / (accel_data.y * sin(data->x) + accel_data.z * cos(data->x)));
+	}
+
+	// heading
+	data->z = (float)atan2(mag_data.z * sin(data->x) - mag_data.y * cos(data->x),
+			mag_data.x * cos(data->y) + mag_data.y * sin(data->y) * sin(data->x) +
+			mag_data.z * sin(data->y) * cos(data->x));
+
+	// convert to degrees
+	data->x *= (180/PI);
+	data->y *= (180/PI);
+	data->z *= (180/PI);
 
 	return true;
 }

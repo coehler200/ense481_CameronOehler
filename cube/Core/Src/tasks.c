@@ -32,11 +32,16 @@ void StartReadImu(void *argument){
 			osDelay(1000);
 		}
 	}
+	if(!setupLSM303DLHC()){
+			for(;;){
+				osDelay(1000);
+			}
+		}
 	for(;;){
 		struct Vec3 data;
 		char buf[64] = "";
-		if(readGyroscope(&data)){
-			sprintf(buf, "x: %f, y: %f, z: %f\r\n", data.x, data.y, data.z);
+		if(getOrientation(&data)){
+			sprintf(buf, "roll: %f, pitch: %f, heading: %f\r\n", data.x, data.y, data.z);
 			serialPrintBlocking(buf, strlen(buf));
 		}
 	}
