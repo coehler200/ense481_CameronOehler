@@ -11,17 +11,17 @@
 #include "stm32f1xx_hal.h"
 #include "stdbool.h"
 
-#define SDEP_MSGTYPE_COMMAND                 (0x10)
-#define SDEP_MSGTYPE_RESPONSE                (0x20)
-#define SDEP_MSGTYPE_ALERT                   (0x40)
-#define SDEP_MSGTYPE_ERROR                   (0x80)
-#define SDEP_MSGTYPE_SLAVE_NOT_READY         (0xFE)
-#define SDEP_MSGTYPE_SLAVE_OVERFLOW          (0xFF)
+#define SDEP_MSGTYPE_COMMAND                 (uint8_t)(0x10)
+#define SDEP_MSGTYPE_RESPONSE                (uint8_t)(0x20)
+#define SDEP_MSGTYPE_ALERT                   (uint8_t)(0x40)
+#define SDEP_MSGTYPE_ERROR                   (uint8_t)(0x80)
+#define SDEP_MSGTYPE_SLAVE_NOT_READY         (uint8_t)(0xFE)
+#define SDEP_MSGTYPE_SLAVE_OVERFLOW          (uint8_t)(0xFF)
 
-#define SDEP_CMDTYPE_INITIALIZE              (0xBEEF)
-#define SDEP_CMDTYPE_AT_WRAPPER              (0x0A00)
-#define SDEP_CMDTYPE_BLE_TX                  (0x0A01)
-#define SDEP_CMDTYPE_BLE_RX                  (0x0A02)
+#define SDEP_CMDTYPE_INITIALIZE              (uint16_t)(0xBEEF)
+#define SDEP_CMDTYPE_AT_WRAPPER              (uint16_t)(0x0A00)
+#define SDEP_CMDTYPE_BLE_TX                  (uint16_t)(0x0A01)
+#define SDEP_CMDTYPE_BLE_RX                  (uint16_t)(0x0A02)
 
 extern SPI_HandleTypeDef hspi2;
 

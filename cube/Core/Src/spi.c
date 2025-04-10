@@ -6,6 +6,7 @@
  */
 
 #include "spi.h"
+#include "cmsis_os2.h"
 
 void spiTransmitBlocking(uint8_t *txBuf, uint16_t len){
 	HAL_SPI_Transmit(&hspi2, txBuf, len, 1000);
@@ -38,17 +39,29 @@ void sendPacket(struct Packet *packet){
 }
 
 bool receivePacket(struct Packet *packet){
-	if(!HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3)){
-		return false;
+	while(!HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3)){
+		osDelay(100);
 	}
 
-	uint8_t rxHeaderBuf[4];
+	uint8_t rxHeaderBuf[3];
+	bool validPacket = false;
 
-	spiReceiveBlocking(rxHeaderBuf, 4);
+	while(!validPacket){
+		spiReceiveBlocking(rxHeaderBuf, 1);
+		if(rxHeaderBuf[0] != 0xFE){
+			validPacket = true;
+		}
+		else{
+			osDelay(1000);
+		}
+	}
 
 	packet->commandType = rxHeaderBuf[0];
-	packet->commandId = ((uint16_t)rxHeaderBuf[2] << 8) | rxHeaderBuf[1];
-	packet->payloadLen = rxHeaderBuf[3];
+
+	spiReceiveBlocking(rxHeaderBuf, 3);
+
+	packet->commandId = ((uint16_t)rxHeaderBuf[1] << 8) | rxHeaderBuf[0];
+	packet->payloadLen = rxHeaderBuf[2];
 
 	uint8_t payloadLen = packet->payloadLen&0x00FF;
 

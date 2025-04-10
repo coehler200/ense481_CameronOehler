@@ -13,6 +13,7 @@
 #include "tasks.h"
 #include "cli.h"
 #include "imu.h"
+#include "ble.h"
 
 /**
  * Entry point for the task ReadImu
@@ -27,6 +28,7 @@ void StartReadImu(void *argument){
  *
 */
 void StartCli(void *argument){
-	setupCli();
-	pollCli();
+	//setupCli();
+	//pollCli();
+	setupBLE();
 }
