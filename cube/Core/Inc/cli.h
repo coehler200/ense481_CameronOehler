@@ -10,8 +10,10 @@
 #define INC_CLI_H_
 
 #include "stm32f1xx_hal.h"
+#include "cmsis_os2.h"
 
 extern UART_HandleTypeDef huart2;
+extern osMessageQueueId_t imuOrientationQueueHandle;
 
 /*
  * Clears the screen, and prints prompt in interrupt mode

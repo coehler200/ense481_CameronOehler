@@ -14,6 +14,7 @@
   */
 
 #include "serial.h"
+#include "cmsis_os2.h"
 
 /**
  * Print data to the usart in a non-blocking (interrupt) mode
@@ -58,6 +59,7 @@ char receiveCharBlocking(){
 	HAL_StatusTypeDef status = HAL_TIMEOUT;
 	while(status == HAL_TIMEOUT){
 		status = HAL_UART_Receive(&huart2, (uint8_t*)c, 1, 100);
+		osDelay(10);
 	}
 	return c[0];
 }

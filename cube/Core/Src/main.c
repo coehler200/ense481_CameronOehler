@@ -61,7 +61,7 @@ osThreadId_t readImuHandle;
 const osThreadAttr_t readImu_attributes = {
   .name = "readImu",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityBelowNormal,
 };
 /* Definitions for cli */
 osThreadId_t cliHandle;
@@ -69,6 +69,11 @@ const osThreadAttr_t cli_attributes = {
   .name = "cli",
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for imuOrientationQueue */
+osMessageQueueId_t imuOrientationQueueHandle;
+const osMessageQueueAttr_t imuOrientationQueue_attributes = {
+  .name = "imuOrientationQueue"
 };
 /* USER CODE BEGIN PV */
 
@@ -142,6 +147,10 @@ int main(void)
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* creation of imuOrientationQueue */
+  imuOrientationQueueHandle = osMessageQueueNew (15, sizeof(float), &imuOrientationQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -404,7 +413,7 @@ __weak void StartCli(void *argument)
 
 /**
   * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM1 interrupt took place, inside
+  * @note   This function is called  when TIM2 interrupt took place, inside
   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
   * a global variable "uwTick" used as application time base.
   * @param  htim : TIM handle
@@ -415,7 +424,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1)
+  if (htim->Instance == TIM2)
   {
     HAL_IncTick();
   }

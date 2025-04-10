@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include "version.h"
 #include "buildDate.h"
-#include "cmsis_os2.h"
 
 /** Maximum number of characters to buffer */
 #define MAX_DATA 64
@@ -36,6 +35,7 @@ char *PROMPT = "> ";
 char *HELP = "Available Commands\r\n"
 		"===================\r\n"
 		"printBinInfo - print version and build info for the binary\r\n"
+		"orientation - print out imu orientation information\r\n"
 		"clear - clears the screen\r\n"
 		"help - display this message\r\n";
 char *UNKNOWN_CMD = "Unknown command. "
@@ -90,6 +90,23 @@ void processCommand(char** tokens, int numTokens){
 		else{
 			char buf[128] = "";
 			sprintf(buf, "Version: %s\r\nBuild Date: %s\r\n", GIT_COMMIT, BUILD_DATE);
+			strcat(txBuffer, buf);
+		}
+	}
+	else if(strcmp(currentToken, "orientation") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+
+			float x;
+			osMessageQueueGet(imuOrientationQueueHandle, &x, 0, osWaitForever);
+			float y;
+			osMessageQueueGet(imuOrientationQueueHandle, &y, 0, osWaitForever);
+			float z;
+			osMessageQueueGet(imuOrientationQueueHandle, &z, 0, osWaitForever);
+			char buf[128] = "";
+			sprintf(buf, "roll: %f, pitch: %f, heading: %f\r\n", x, y, z);
 			strcat(txBuffer, buf);
 		}
 	}
@@ -187,6 +204,5 @@ void pollCli(){
 				data[dataLen++] = c;
 			}
 		}
-		osDelay(10);
 	}
 }
