@@ -36,6 +36,7 @@ char *HELP = "Available Commands\r\n"
 		"===================\r\n"
 		"printBinInfo - print version and build info for the binary\r\n"
 		"orientation - print out imu orientation information\r\n"
+		"stream - stream IMU orientation information continuously forever\r\n"
 		"clear - clears the screen\r\n"
 		"help - display this message\r\n";
 char *UNKNOWN_CMD = "Unknown command. "
@@ -98,7 +99,6 @@ void processCommand(char** tokens, int numTokens){
 			strcat(txBuffer, UNKNOWN_CMD);
 		}
 		else{
-
 			float x;
 			osMessageQueueGet(imuOrientationQueueHandle, &x, 0, osWaitForever);
 			float y;
@@ -108,6 +108,24 @@ void processCommand(char** tokens, int numTokens){
 			char buf[128] = "";
 			sprintf(buf, "roll: %f, pitch: %f, heading: %f\r\n", x, y, z);
 			strcat(txBuffer, buf);
+		}
+	}
+	else if(strcmp(currentToken, "stream") == 0){
+		if(numTokens > 1){
+			strcat(txBuffer, UNKNOWN_CMD);
+		}
+		else{
+			while(1){
+				float x;
+				osMessageQueueGet(imuOrientationQueueHandle, &x, 0, osWaitForever);
+				float y;
+				osMessageQueueGet(imuOrientationQueueHandle, &y, 0, osWaitForever);
+				float z;
+				osMessageQueueGet(imuOrientationQueueHandle, &z, 0, osWaitForever);
+				char buf[128] = "";
+				sprintf(buf, "{'roll': %f, 'pitch': %f, 'heading': %f}", x, y, z);
+				serialPrintBlocking(buf, strlen(buf));
+			}
 		}
 	}
 	else if(strcmp(currentToken, "clear") == 0){
@@ -134,39 +152,6 @@ void processCommand(char** tokens, int numTokens){
 	//serialPrint(txBuffer, strlen(txBuffer));
 	serialPrintBlocking(txBuffer, strlen(txBuffer));
 }
-
-//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-//	receiveChar(rxBuffer);
-//	char c = rxBuffer[0];
-//	if(c == '\r' || c == '\n'){ // Enter via CR or LF
-//		data[dataLen++] = '\0';
-//		char* tokens[MAX_TOKENS] = {};
-//		int numTokens = tokenizeString(data, tokens);
-//		processCommand(tokens, numTokens);
-//		dataLen = 0;
-//	}
-//	else if(c == 127){ // Backspace
-//		if(dataLen != 0){
-//			dataLen--;
-//			serialPrint(&c, 1);
-//		}
-//	}
-//	else{
-//		if(dataLen < MAX_DATA){ // Prevent overflow
-//			serialPrint(&c, 1);
-//			data[dataLen++] = c;
-//		}
-//	}
-//}
-
-//void setupCliWithInterrupt(){
-//	char txBuffer[TX_BUFFER_SIZE] = "";
-//	strcat(txBuffer, CLEAR_ENTIRE_SCREEN);
-//	strcat(txBuffer, PROMPT);
-//	serialPrint(txBuffer, strlen(txBuffer));
-//	receiveChar(rxBuffer);
-//	while(1);
-//}
 
 /**
  * Clear the screen and print the prompt
