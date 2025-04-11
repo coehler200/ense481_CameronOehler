@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://qyr4hx53d118"]
+
+[ext_resource type="Script" uid="uid://dtwwfhew25kt7" path="res://http_req.gd" id="1_ig7tw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ig7tw"]
+size = Vector3(2.43, 0.405, 4.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xm2m"]
+albedo_color = Color(0.768054, 0.602659, 0.500579, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
+size = Vector3(1.27, 0.24, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1bvp3"]
+size = Vector3(0.84, 0.175, 2.72)
+
+[sub_resource type="Environment" id="Environment_ig7tw"]
+background_energy_multiplier = 3.53
+ambient_light_color = Color(0.851769, 0.851769, 0.851769, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Cube" type="Node3D" parent="."]
+script = ExtResource("1_ig7tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cube"]
+mesh = SubResource("BoxMesh_ig7tw")
+surface_material_override/0 = SubResource("StandardMaterial3D_0xm2m")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cube"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.375893, 0.2673, -1.55342)
+mesh = SubResource("BoxMesh_h2yge")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cube"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.485864, 0.251214, 0.628692)
+mesh = SubResource("BoxMesh_1bvp3")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cube"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.555369, 0.251214, 0.628692)
+mesh = SubResource("BoxMesh_1bvp3")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Cube"]
+timeout = 2.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ig7tw")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.753953, 0.656928, 0, -0.656928, 0.753953, 0, 2.96098, 3.69451)
