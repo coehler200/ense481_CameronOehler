@@ -32,8 +32,13 @@ struct Packet {
 	uint8_t payload[16];
 };
 
-void spiTransmitBlocking(uint8_t *txBuf, uint16_t len);
-void spiReceiveBlocking(uint8_t *rxBuf, uint16_t len);
+bool isSpiRxBufferEmpty(void);
+bool isSpiRxBufferFull(void);
+bool addToSpiRxBuffer(uint8_t d);
+uint8_t removeFromSpiRxBuffer(void);
+
+void spiTransmitBlocking(uint8_t *txBuf, uint8_t len);
+void spiReceiveBlocking(uint8_t *rxBuf, uint8_t len);
 void setupPacketHeader(struct Packet *packet, uint8_t command_type, uint16_t command_id, uint8_t payload_len, bool moreData);
 void sendPacket(struct Packet *packet);
 bool receivePacket(struct Packet *packet);

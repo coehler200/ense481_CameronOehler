@@ -60,6 +60,8 @@ void Error_Handler(void);
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
 #define B1_EXTI_IRQn EXTI15_10_IRQn
+#define BLE_RST_Pin GPIO_PIN_0
+#define BLE_RST_GPIO_Port GPIOC
 #define BLE_CS_Pin GPIO_PIN_2
 #define BLE_CS_GPIO_Port GPIOC
 #define BLE_RX_AVAIL_Pin GPIO_PIN_3

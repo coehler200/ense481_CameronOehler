@@ -11,7 +11,9 @@
 #include "stm32f1xx_hal.h"
 #include "stdbool.h"
 
-bool setupBLE(void);
-bool sendMessage(uint8_t *data);
+void setupBLE(void);
+void flush(void);
+bool sendMessage(uint8_t *data, uint16_t dataLen);
+uint16_t receiveMessage(uint8_t *data);
 
 #endif /* INC_BLE_H_ */
