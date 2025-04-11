@@ -16,7 +16,6 @@
 
 /**
  * Entry point for the task ReadImu
- *
 */
 void StartReadImu(void *argument){
 	pollImu();
@@ -24,7 +23,6 @@ void StartReadImu(void *argument){
 
 /**
  * Entry point for the task Cli
- *
 */
 void StartCli(void *argument){
 	setupCli();

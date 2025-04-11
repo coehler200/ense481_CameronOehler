@@ -5,7 +5,11 @@
   * @author   Cameron Oehler
   ******************************************************************************
   *
+  * Uses paraphrased information/code from the Adafruit 9dof, L3GD20H, and LSM303DLHC
+  * libraries
+  *
   *	Created on: Mar 24, 2025
+  *	Updated on: Apr  9, 2025
   *
   ******************************************************************************
   */
@@ -15,9 +19,9 @@
 #include <math.h>
 
 /**
- * Method to setup the L3GD20H device on the 9DOF board
+ * Method to setup/configure the L3GD20H device on the 9DOF board
  *
- * @return Success flag
+ * @return bool indicating success or failure
  */
 bool setupL3GD20H(void){
 	bool success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG1, 0x00, L3GD20_ADDRESS_GYRO);
@@ -26,18 +30,26 @@ bool setupL3GD20H(void){
 	success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG1, 0x0F, L3GD20_ADDRESS_GYRO);
 	if(!success) return false;
 
+	// Set resolution/gain
+
+	// 250 DPS
 	//success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG4, 0x00, L3GD20_ADDRESS_GYRO);
+
+	// 500 DPS
 	//success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG4, 0x10, L3GD20_ADDRESS_GYRO);
+
+	// 200 DPS
 	success = sendI2cCmdBlocking(GYRO_REGISTER_CTRL_REG4, 0x20, L3GD20_ADDRESS_GYRO);
+
 	if(!success) return false;
 
 	return true;
 }
 
 /**
- * Method to setup the LSM303DLHC device on the 9DOF board
+ * Method to setup/configure the LSM303DLHC device on the 9DOF board
  *
- * @return Success flag
+ * @return bool indicating success or failure
  */
 bool setupLSM303DLHC(void){
 	bool success = sendI2cCmdBlocking(LSM303_REGISTER_ACCEL_CTRL_REG1_A, 0x57, LSM303_ADDRESS_ACCEL);
@@ -50,9 +62,10 @@ bool setupLSM303DLHC(void){
 }
 
 /**
- * Read raw data from the gyroscope
+ * Read data from the gyroscope in rad/s
  *
- * @return Vec3 containing the x, y, z data
+ * @param data pointer to a Vec3 where the gyroscope data will be stored
+ * @return bool indicating success or failure
  */
 bool readGyroscope(struct Vec3 *data){
 	bool success = sendI2cByteBlocking(GYRO_REGISTER_OUT_X_L | 0x80, L3GD20_ADDRESS_GYRO);
@@ -65,6 +78,8 @@ bool readGyroscope(struct Vec3 *data){
 	data->x = ((int16_t)rawData[0] | ((int16_t)rawData[1] << 8));
 	data->y = ((int16_t)rawData[2] | ((int16_t)rawData[3] << 8));
 	data->z = ((int16_t)rawData[4] | ((int16_t)rawData[5] << 8));
+
+	// Set resolution/gain
 
 //	data->x *= GYRO_SENSITIVITY_250DPS;
 //	data->y *= GYRO_SENSITIVITY_250DPS;
@@ -86,9 +101,10 @@ bool readGyroscope(struct Vec3 *data){
 }
 
 /**
- * Read raw data from the accelerometer
+ * Read data from the accelerometer in m/s
  *
- * @return Vec3 containing the x, y, z data
+ * @param data pointer to a Vec3 where the accelerometer data will be stored
+ * @return bool indicating success or failure
  */
 bool readAccelerometer(struct Vec3 *data){
 	bool success = sendI2cByteBlocking(LSM303_REGISTER_ACCEL_OUT_X_L_A | 0x80, LSM303_ADDRESS_ACCEL);
@@ -110,9 +126,10 @@ bool readAccelerometer(struct Vec3 *data){
 }
 
 /**
- * Read raw data from the magnetism sensor
+ * Read data from the magnetism sensor in microteslas
  *
- * @return Vec3 containing the x, y, z data
+ * @param data pointer to a Vec3 where the magnetometer data will be stored
+ * @return bool indicating success or failure
  */
 bool readMag(struct Vec3 *data){
 	bool success = sendI2cByteBlocking(LSM303_REGISTER_MAG_OUT_X_H_M, LSM303_ADDRESS_MAG);
@@ -134,9 +151,10 @@ bool readMag(struct Vec3 *data){
 }
 
 /**
- * Calculate roll, pitch, and heading
+ * Calculate roll, pitch, and heading by using data from accelerometer and magnetometer
  *
- * @return Vec3 containing the x(roll), y(pitch), z(heading) data
+ * @param data pointer to a Vec3 where the calculated orientation data will be stored x(roll), y(pitch), z(heading)
+ * @return bool indicating success or failure
  */
 bool getOrientation(struct Vec3 *data){
 	struct Vec3 accel_data;

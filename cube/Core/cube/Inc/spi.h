@@ -11,20 +11,33 @@
 #include "stm32f1xx_hal.h"
 #include "stdbool.h"
 
+/** SDEP message type of command */
 #define SDEP_MSGTYPE_COMMAND                 (uint8_t)(0x10)
+/** SDEP message type of response */
 #define SDEP_MSGTYPE_RESPONSE                (uint8_t)(0x20)
+/** SDEP message type of alert */
 #define SDEP_MSGTYPE_ALERT                   (uint8_t)(0x40)
+/** SDEP message type of error */
 #define SDEP_MSGTYPE_ERROR                   (uint8_t)(0x80)
+/** SDEP message type of slave device not ready */
 #define SDEP_MSGTYPE_SLAVE_NOT_READY         (uint8_t)(0xFE)
+/** SDEP message type of slave device overflow */
 #define SDEP_MSGTYPE_SLAVE_OVERFLOW          (uint8_t)(0xFF)
 
+/** SDEP command type of init */
 #define SDEP_CMDTYPE_INITIALIZE              (uint16_t)(0xBEEF)
+/** SDEP command type of at wrapper */
 #define SDEP_CMDTYPE_AT_WRAPPER              (uint16_t)(0x0A00)
+/** SDEP command type of ble tx */
 #define SDEP_CMDTYPE_BLE_TX                  (uint16_t)(0x0A01)
+/** SDEP command type of ble rx */
 #define SDEP_CMDTYPE_BLE_RX                  (uint16_t)(0x0A02)
 
 extern SPI_HandleTypeDef hspi2;
 
+/**
+ * A SDEP packet
+ */
 struct Packet {
 	uint8_t commandType;
 	uint16_t commandId;

@@ -1,13 +1,21 @@
-/*
- * imu.c
- *
- *  Created on: Apr 9, 2025
- *      Author: coehl
- */
+/**
+  ******************************************************************************
+  * @file     imu.c
+  * @brief    Functions to be called by a task to setup and poll the IMU
+  * @author   Cameron Oehler
+  ******************************************************************************
+  *
+  *	Created on: Apr 9, 2025
+  *
+  ******************************************************************************
+  */
 
 #include "imu.h"
 #include "9dof.h"
 
+/**
+ * Setup the IMU
+ */
 void setupImu(){
 	if(!setupL3GD20H()){
 		for(;;){
@@ -21,6 +29,9 @@ void setupImu(){
 	}
 }
 
+/**
+ * Continuously poll the IMU for orientation data and put it into the queue
+ */
 void pollImu(){
 	setupImu();
 	for(;;){

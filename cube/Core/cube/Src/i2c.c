@@ -57,7 +57,7 @@ bool sendI2cByteBlocking(uint8_t data, uint16_t addr){
 }
 
 /**
- * Send a two bytes, a register and data, through I2C in a blocking mode
+ * Send two bytes, a register and a data byte, through I2C in a blocking mode
  *
  * @param reg the register of the i2c device to manipulate
  * @param data the date to write to the i2c device at the register location

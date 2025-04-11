@@ -12,6 +12,7 @@
   * Updated on: Dec 2, 2024
   * Updated on: Feb 13, 2025
   * Updated on: Mar 23, 2025
+  * Updated on: Apr 11, 2025
   *
   ******************************************************************************
   */
@@ -150,7 +151,6 @@ void processCommand(char** tokens, int numTokens){
 	}
 
 	strcat(txBuffer, PROMPT);
-	//serialPrint(txBuffer, strlen(txBuffer));
 	serialPrintBlocking(txBuffer, strlen(txBuffer));
 }
 
