@@ -123,8 +123,9 @@ void processCommand(char** tokens, int numTokens){
 				float z;
 				osMessageQueueGet(imuOrientationQueueHandle, &z, 0, osWaitForever);
 				char buf[128] = "";
-				sprintf(buf, "{'roll': %f, 'pitch': %f, 'heading': %f}", x, y, z);
+				sprintf(buf, "{\"r\": %f, \"p\": %f, \"h\": %f}\n", x, y, z);
 				serialPrintBlocking(buf, strlen(buf));
+				osDelay(10);
 			}
 		}
 	}
