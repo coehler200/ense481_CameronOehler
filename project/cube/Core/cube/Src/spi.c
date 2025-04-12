@@ -6,7 +6,7 @@
   ******************************************************************************
   *
   * Includes basic methods for communicating with SPI devices. Also includes a simple
-  * ring buffer system for receiving data and methods for sending SPEP (an Adafruit
+  * ring buffer system for receiving data and methods for sending SDEP (an Adafruit
   * protocol) packets.
   *
   *	Created on: Apr 9, 2025

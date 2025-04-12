@@ -1,4 +1,4 @@
-# Cube Project
+# Cube Visualization Project
 Not an actual cube due to time constraints (but kept the name)
 
 ## Setup
